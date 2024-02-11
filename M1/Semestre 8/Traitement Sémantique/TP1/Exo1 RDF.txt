@@ -1,0 +1,16 @@
+# our namespace
+@prefix tsd: <http://www.umontpellier.fr/traitementsemantiquedesdonnees#> .
+
+# common namespaces
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#Romain
+tsd:romain_gallerne rdf:type foaf:Person .
+tsd:romain_gallerne foaf:mail "romain.gallerne@etud.umontpellier.fr" .
+tsd:romain_gallerne foaf:name "Romain" .
+tsd:romain_gallerne foaf:familyname "Gallerne" .
+tsd:romain_gallerne tsd:personalFriend tsd:alice_dupont .

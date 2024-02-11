@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<title>Etoiles</title>
+	<style>
+        body {
+            margin: 10px auto;
+            width: 500px;
+            background: black;
+            border: solid 1px darkgray;
+        }
+	</style>
+</head>
+<body>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript" src="js/algebre.js"></script>
+    <script type="module">
+        import * as THREE from "./utils/three.module.min.js";
+
+        /* 0. définitions des constantes et variables globales */
+        // les positions et tailles des planetes seront assez éloignées de la réalité, mais
+        // on peut les nommer dans l'ordre mercure, venus, terre, mars, jupiter, saturne, uranus, neptune
+        const couleurs = [0x666666, 0xff7f00, 0x0080ff, 0x800000, 0x00cc99, 0x004455, 0xffbb44, 0xff00aa];
+        const planetOdg = [30, 15, 20, 15, 70, 60, 40, 40];
+        let animateState = true;
+        let sceneHalfWidth = 3000;
+        let sprites = [], sprite;
+        sprites.push(new THREE.TextureLoader().load('./textures/snowflake1.png'));
+        sprites.push(new THREE.TextureLoader().load('./textures/snowflake2.png'));
+        sprites.push(new THREE.TextureLoader().load('./textures/snowflake3.png'));
+        sprites.push(new THREE.TextureLoader().load('./textures/snowflake4.png'));
+        sprites.push(new THREE.TextureLoader().load('./textures/snowflake5.png'));
+
+        /* 1. création d'une scène et d'un renderer*/
+        const scene = new THREE.Scene();
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+        renderer.setSize(500, 500);
+        document.body.appendChild(renderer.domElement);
+
+        
+        /* 2. create Camera - > OrthographicCamera(left : Number, right : Number, top : Number, bottom : Number, near : Number, far : Number)*/       
+        let camera = new THREE.OrthographicCamera(-sceneHalfWidth, sceneHalfWidth, sceneHalfWidth, -sceneHalfWidth, 0, 2 * sceneHalfWidth);
+        camera.position.set(0, 0, 3000);
+        camera.lookAt(0, 0, 0);
+
+       
+        /* 3. create 3D objets */
+    
+        //i = 1,2,ou 3
+        //top = taille de la flèche,
+        //ahw = arrow half width,
+        //ab = arrow bottom
+        function createArrow(color = 0xaa3333, i = 1, top = 500, ab = 250, ahw = 150) {
+            const material = new THREE.LineBasicMaterial({ color: color });
+
+            const points = [];
+            const coords = [
+                [ab, ahw, 0],
+                [top, 0, 0],
+                [0, 0, 0],
+                [top, 0, 0],
+                [ab, -ahw, 0]
+            ]
+            coords.forEach(t => points.push(new THREE.Vector3(t[0], t[1], t[2])));
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(geometry, material);
+            if (i == 2) {
+                line.rotation.set(0, 0, Math.PI / 2);
+            } else if (i == 3) {
+                line.rotation.set(0, 3 * Math.PI / 2, 0);
+            }
+            return line;
+        }
+
+        function repere(){
+            
+        }
+
+        function createOneSetOfStars(vertices, sprite) {
+            let geometry = new THREE.BufferGeometry();
+            let time = Math.pow(Date.now() * 0.0005, 2);
+            let h = (360 * (1.0 + time) % 360) / 360;
+            let starMaterial = new THREE.PointsMaterial({ size: 17, map: sprite, alphaTest: 0.5, transparent: true });
+            starMaterial.color.setHSL(h, 0.5, 0.5, THREE.SRGBColorSpace);
+            sprite.colorSpace = THREE.SRGBColorSpace;
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            let stars = new THREE.Points(geometry, starMaterial);
+            return stars;
+        }
+
+        function addAllStars(scene, vertices, sprite) {
+            const nv = vertices.length;
+            let k = Math.floor(nv / (3 * sprites.length));
+            //console.log("nombre d'étoiles", nv/3, ", nombre de textures ", sprites.length );
+
+            let i, tmp;
+            for (i = 0; (i + 1) * k * 3 < nv; i++) {
+                if (i < sprites.length) sprite = sprites[i];
+                tmp = vertices.slice(i * k * 3, (i + 1) * k * 3);
+                scene.add(createOneSetOfStars(tmp, sprite));
+                //console.log(i, ' ', k, ' ', i * k, ' ', tmp);
+            }
+        }
+
+        function createRepere() {
+            let g = new THREE.Group();
+            //todo
+            return g;
+        }
+
+        function createSphere(color = 0xffff00, radius = 1) {
+            //todo
+        }
+
+        /* 4. create listener to handle user input*/
+        document.body.addEventListener('pointerdown', onPointerDown);
+        function onPointerDown(event) {
+            animateState = !animateState;
+            animate();
+        }
+
+        document.body.addEventListener('keydown', onKeyDown);
+        let x = 0, y = 0, z = 0;
+        let dx = 0, dy = 0, dz = 0, epsilon = Math.PI / 10;
+
+        function onKeyDown(e) {
+            e.preventDefault();
+
+            switch (e.keyCode) {
+                case 37://left
+                    if (e.ctrlKey) {
+                        console.log("rotation autour de k ");
+                    } else {
+                        console.log("rotation autour de j");
+                    }
+                    break;
+                case 39: //right                   
+                    if (e.ctrlKey) {
+                        console.log("rotation autour de k");
+                    } else {
+                        console.log("rotation autour de j");
+                    }
+                    break;
+                case 38: //up
+                    console.log("rotation autour de i");
+                    break;
+                case 40: //down
+                    console.log("rotation autour de i");
+                    break;
+                case 90: //z
+                    console.log("remise à zéro");
+                   break;
+            }
+        }
+
+        /* 5. programme init and main loop */
+        let frameNum = 0;
+        addAllStars(scene, vertices, sprites);
+        scene.add(createArrow());
+
+        function animate() {
+            if (animateState) requestAnimationFrame(animate);
+            //console.log(frameNum);
+            frameNum++;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

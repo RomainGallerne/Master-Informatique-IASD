@@ -1,0 +1,97 @@
+% base de fait
+position(un;deux;trois;quatre;cinq). %1
+suivant(bordureINF,un).
+suivant(un,deux).
+suivant(deux,trois).
+suivant(trois,quatre).
+suivant(quatre,cinq).
+suivant(cinq,bordureSUP).
+
+nationalite(X,eng):-couleur(X,rou),position(X). %2
+couleur(X,rou):-nationalite(X,eng),position(X).
+animal(X,dog):-nationalite(X,spa),position(X). %3
+nationalite(X,spa):-animal(X,dog),position(X).
+boisson(X,cof):-couleur(X,ver),position(X). %4
+couleur(X,ver):-boisson(X,ver),position(X).
+nationalite(X,ukr):-boisson(X,tea),position(X). %5
+boisson(X,tea):-nationalite(X,ukr),position(X).
+couleur(X,ivo):-couleur(Y,ver),suivant(X,Y),position(X),position(Y). %6
+couleur(Y,ver):-couleur(X,ivo),suivant(X,Y),position(X),position(Y).
+cigarette(X,gol):-animal(X,sna),position(X). %7
+animal(X,sna):-cigarette(X,gol),position(X).
+cigarette(X,koo):-couleur(X,jau),position(X). %8
+couleur(X,jau):-cigarette(X,koo),position(X).
+boisson(trois,mil). %9
+nationalite(un,nor). %10
+cigarette(X,luc):-boisson(X,ora),position(X). %13
+boisson(X,ora):-cigarette(X,luc),position(X).
+nationalite(X,jap):-cigarette(X,par),position(X). %14
+cigarette(X,par):-nationalite(X,jap),position(X).
+
+cigarette(X,che),cigarette(Z,che):-animal(Y,fox),suivant(X,Y),suivant(Y,Z). %11
+cigarette(X,koo),cigarette(Z,koo):-animal(Y,hor),suivant(X,Y),suivant(Y,Z). %12
+couleur(X,ble),couleur(Z,ble):-nationalite(Y,nor),suivant(X,Y),suivant(Y,Z). %15
+
+% interdits
+:-couleur(cinq,ivo).
+:-couleur(un,ver).
+
+:-couleur(bordureSUP,_).
+:-animal(bordureSUP,_).
+:-boisson(bordureSUP,_).
+:-cigarette(bordureSUP,_).
+:-nationalite(bordureSUP,_).
+
+:-couleur(bordureINF,_).
+:-animal(bordureINF,_).
+:-boisson(bordureINF,_).
+:-cigarette(bordureINF,_).
+:-nationalite(bordureINF,_).
+
+:-couleur(M,X1),couleur(M,X2),X1!=X2,position(M).
+:-animal(M,X1),animal(M,X2),X1!=X2,position(M).
+:-boisson(M,X1),boisson(M,X2),X1!=X2,position(M).
+:-cigarette(M,X1),cigarette(M,X2),X1!=X2,position(M).
+:-nationalite(M,X1),nationalite(M,X2),X1!=X2,position(M).
+
+:-couleur(M1,X),couleur(M2,X),M1!=M2,position(M1),position(M2).
+:-animal(M1,X),animal(M2,X),M1!=M2,position(M1),position(M2).
+:-boisson(M1,X),boisson(M2,X),M1!=M2,position(M1),position(M2).
+:-cigarette(M1,X),cigarette(M2,X),M1!=M2,position(M1),position(M2).
+:-nationalite(M1,X),cigarette(M2,X),M1!=M2,position(M1),position(M2).
+
+% règles d'assignations
+couleur(X,ble):-position(X),not couleur(X,ver),not couleur(X,rou),not couleur(X,jau),not couleur(X,ivo).
+couleur(X,ver):-position(X),not couleur(X,ble),not couleur(X,rou),not couleur(X,jau),not couleur(X,ivo).
+couleur(X,rou):-position(X),not couleur(X,ble),not couleur(X,ver),not couleur(X,jau),not couleur(X,ivo).
+couleur(X,jau):-position(X),not couleur(X,ble),not couleur(X,ver),not couleur(X,rou),not couleur(X,ivo).
+couleur(X,ivo):-position(X),not couleur(X,ble),not couleur(X,ver),not couleur(X,rou),not couleur(X,jau).
+
+animal(X,dog):-position(X),not animal(X,hor),not animal(X,sna),not animal(X,fox),not animal(X,zeb).
+animal(X,hor):-position(X),not animal(X,dog),not animal(X,sna),not animal(X,fox),not animal(X,zeb).
+animal(X,sna):-position(X),not animal(X,dog),not animal(X,hor),not animal(X,fox),not animal(X,zeb).
+animal(X,fox):-position(X),not animal(X,dog),not animal(X,hor),not animal(X,sna),not animal(X,zeb).
+animal(X,zeb):-position(X),not animal(X,dog),not animal(X,hor),not animal(X,sna),not animal(X,fox).
+
+cigarette(X,gol):-position(X),not cigarette(X,koo),not cigarette(X,che),not cigarette(X,par),not cigarette(X,luc).
+cigarette(X,koo):-position(X),not cigarette(X,gol),not cigarette(X,che),not cigarette(X,par),not cigarette(X,luc).
+cigarette(X,che):-position(X),not cigarette(X,gol),not cigarette(X,koo),not cigarette(X,par),not cigarette(X,luc).
+cigarette(X,par):-position(X),not cigarette(X,gol),not cigarette(X,koo),not cigarette(X,che),not cigarette(X,luc).
+cigarette(X,luc):-position(X),not cigarette(X,gol),not cigarette(X,koo),not cigarette(X,che),not cigarette(X,par).
+
+boisson(X,eau):-position(X),not boisson(X,tea),not boisson(X,ora),not boisson(X,cof),not boisson(X,mil).
+boisson(X,tea):-position(X),not boisson(X,eau),not boisson(X,ora),not boisson(X,cof),not boisson(X,mil).
+boisson(X,ora):-position(X),not boisson(X,eau),not boisson(X,tea),not boisson(X,cof),not boisson(X,mil).
+boisson(X,cof):-position(X),not boisson(X,eau),not boisson(X,tea),not boisson(X,ora),not boisson(X,mil).
+boisson(X,mil):-position(X),not boisson(X,eau),not boisson(X,tea),not boisson(X,ora),not boisson(X,cof).
+
+nationalite(X,jap):-position(X),not nationalite(X,nor),not nationalite(X,eng),not nationalite(X,spa),not nationalite(X,ukr).
+nationalite(X,nor):-position(X),not nationalite(X,jap),not nationalite(X,eng),not nationalite(X,spa),not nationalite(X,ukr).
+nationalite(X,eng):-position(X),not nationalite(X,jap),not nationalite(X,nor),not nationalite(X,spa),not nationalite(X,ukr).
+nationalite(X,spa):-position(X),not nationalite(X,jap),not nationalite(X,nor),not nationalite(X,eng),not nationalite(X,ukr).
+nationalite(X,ukr):-position(X),not nationalite(X,jap),not nationalite(X,nor),not nationalite(X,eng),not nationalite(X,spa).
+
+maison(P,C,A,F,B,N):-position(P),couleur(P,C),animal(P,A),cigarette(P,F),boisson(P,B),nationalite(P,N).
+
+% affichage
+#show maison/6.

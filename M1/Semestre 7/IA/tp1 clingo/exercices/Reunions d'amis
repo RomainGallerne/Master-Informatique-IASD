@@ -1,0 +1,10 @@
+% base de fait
+present(b).
+present(c).
+
+% règles
+present(d) :- present(c).
+present(a) :- present(f).
+present(x) :- present(e).
+present(f) :- present(b).
+present(x) :- present(b),not present(a).

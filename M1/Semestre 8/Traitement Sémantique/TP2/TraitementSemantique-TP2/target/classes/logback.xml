@@ -1,0 +1,17 @@
+<configuration>
+    <!-- Define an appender that writes to a file -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>jenamodels.log</file> <!-- Name of the log file -->
+        <append>true</append> <!-- Set to true to append to the file, false to overwrite -->
+        <encoder>
+            <!-- Pattern to format log messages -->
+            <!-- %method will display the method name -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %method: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define the root logger and its level -->
+    <root level="debug">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

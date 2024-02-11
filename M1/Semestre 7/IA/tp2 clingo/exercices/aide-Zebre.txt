@@ -1,0 +1,63 @@
+%% Voici un squelette pour le problème du zèbre
+%% Mais il y a d'autres façons de faire
+
+% BASE DE FAITS
+% There are five houses
+% On définit les 5 numéros de maison
+maison(1).
+maison(2).
+maison(3).
+maison(4).
+maison(5).
+% éventuellement d'autres phrases peuvent donner d'autres faits
+
+% BASE DE REGLES
+
+% L'idée est d'avoir 5 prédicats binaires liant une maison à ses propriétés : 
+% aCouleur(M,C), aBoisson(M,B), aAnimal(M,A), aNationalite(M,N), aMarque(M,C)
+
+% 1. Règles générant toutes les affectations possibles
+
+% Toute maison a une couleur parmi : red, green, blue, yellow ivory (5 règles)
+% A partir de la BF initiale, une seule règle peut s'appliquer pour un même numéro de maison
+% ceci génère 5^5 (5 puissance 5) nouveaux "mondes" où chacune des 5 maisons a une seule couleur
+
+aCouleur(MAISON, red) :- maison(MAISON), not aCouleur(MAISON, green), not aCouleur(MAISON, yellow), not aCouleur(MAISON, ivory), not aCouleur(MAISON, blue).
+aCouleur(MAISON, green) :- maison(MAISON), not aCouleur(MAISON, yellow), not aCouleur(MAISON, ivory), not aCouleur(MAISON, blue), not aCouleur(MAISON, red).
+aCouleur(MAISON, yellow) :- maison(MAISON), not aCouleur(MAISON, ivory), not aCouleur(MAISON, blue), not aCouleur(MAISON, red), not aCouleur(MAISON, green).
+aCouleur(MAISON, ivory) :- maison(MAISON), not aCouleur(MAISON, blue), not aCouleur(MAISON, red), not aCouleur(MAISON, green), not aCouleur(MAISON, yellow).
+aCouleur(MAISON, blue) :- maison(MAISON), not aCouleur(MAISON, red), not aCouleur(MAISON, green), not aCouleur(MAISON, yellow), not aCouleur(MAISON, ivory).
+
+% Même principe pour les boissons, les animaux, les nationalités et les marques
+
+% Lorsque ces règles ont été appliquées, on obtient 5^25 "mondes" !
+
+% 2. Contraintes de différence : on les modélise par des contraintes négatives
+% On élimine tous les mondes dans lesquelles 2 maisons ont une même valeur pour une même propriété
+
+:- aBoisson(MAISON_1, X), aBoisson(MAISON_2, X), MAISON_1 != MAISON_2.
+:- aAnimal(MAISON_1, X), aAnimal(MAISON_2, X), MAISON_1 != MAISON_2.
+:- aNationalite(MAISON_1, X), aNationalite(MAISON_2, X), MAISON_1 != MAISON_2.
+:- aMarque(MAISON_1, X), aMarque(MAISON_2, X), MAISON_1 != MAISON_2.
+:- aCouleur(MAISON_1, X), aCouleur(MAISON_2, X), MAISON_1 != MAISON_2.
+ 
+%3. Contraintes du puzzle
+% Le plus simple est de les modéliser par des contraintes négatives 
+% On supprime encore des mondes : ceux qui ne satisfont pas les contraintes du puzzle
+
+% The Englishman lives in the red house
+:- aCouleur(M1, red), aNationalite(M2, english), M1 != M2.
+
+% Même principe pour les autres phrases 
+% C'est bien pratique d'ajouter des règles pour définir aDroite(M1,M2) et aCote(M1,M2) 
+
+% Chaque base de faits saturée qui respecte toutes les contraintes négatives correspond à un modèle de la base de connaissances
+% Mais ici, il n'en existe qu'une. 
+
+% 4. Enfin, une règle pour joli affichage des résultats : 
+% Pour une maison X, grouper toutes ses propriétés dans un seul prédicat 
+% maison(MAISON, COULEUR, NATIONALITE, BOISSON, ANIMAL, MARQUE)
+
+
+#show maison/6.
+

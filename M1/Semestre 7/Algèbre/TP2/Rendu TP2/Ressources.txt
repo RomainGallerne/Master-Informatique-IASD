@@ -1,0 +1,6 @@
+Ressources utilisés :
+	- Cours
+	- Documentation Java
+	- Wikipédia (formule de laplace)
+	- Stackoverflow (pour voir comment faire le calcul du déterminant d'une matrice de taille NxN en java de façon récursive)
+	- dcode.fr (vérifier les résultats du déterminant et de l'inverse)

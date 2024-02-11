@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>TP1 - Espaces vectoriels, applications linéaires et calculs matriciels</title>
+	<style type="text/css">
+		html {
+			font-family: sans-serif;
+			font-size: 100%;
+		}
+
+		.remark {
+			background: linear-gradient(to right, blue, green);
+		}
+
+		.remark-slide-content h1, .remark-slide-content h2, .remark-slide-content h3 {
+			font-weight: normal;
+			color: rgb(128,128, 0);
+			font-size: 3rem;
+		}
+
+		.remark-slide-content h1 {
+			font-size: 2rem;
+		}
+
+		.remark-slide-content h2 {
+			font-size: 1.5rem;
+		}
+
+		img {
+			float: right;
+		}
+
+		.fullPage {
+			width: 100%;
+		}
+
+		.remark-code,
+		.remark-inline-code {
+			font-family: monospace;
+			color: rgb(122, 214, 127);
+		}
+	</style>
+</head>
+<body>
+	<textarea id="source">
+
+class: left, top
+
+# TP 1 - Objectifs et plan du tp 
+
+1. Objectifs
+	- application de notions liées aux espaces vectoriels, applications linéaires et calculs matriciels. 
+	- réalisation d'une petite animation d'un espace étoilé imaginaire en utilisant l'api THREE.js.
+
+2. Plan:
+
+	- espace 3D, espace 2D, projection et caméra 
+	- création des étoiles, du soleil, des planètes et graphe de scène
+	- transformations 3D
+		- le repère du monde
+		- le repère de l'objet
+		- le repère de la caméra
+		- autres repères 
+	- animation
+	- et un peu d'algèbre.  
+
+---
+class: left, top
+# TP 1 - Travail à rendre, calendrier <br />et documents autorisés
+
+- Travail à rendre en binôme
+	- une archive zip contenant au minimum 
+		- tp.html - le tp est contenu dans ce fichier
+		- algebre.js - les fonctions d'algèbre contenant le code source des fonctions demandées dans l'énoncé.
+		- readme.txt - les noms des étudiants qui rendent ce tp, les explications demandées et vos commentaires sur ce qui a été fait et ce qui n'a pas été fait sont à écrire dans le readme.
+		- et les images demandées (img1.png, img2.png, img3.png, img4.png)  
+
+- Documents autorisés
+	- tous les documents sont autorisés <em>à condition de les citer.</em>
+
+- Remarque
+	- les étudiants bénéficiant d'un tiers-temps, doivent se déclarer auprès de l'encadrante pour adapter leurs conditions d'exercice.
+---
+# TP 1 - Configuration et code source
+![image de ce qui est affiché par le programme de démarrage](./img/canvas.png)](./img/canvas.png)
+Pour ce tp, nous allons utiliser un serveur http (local). Pour configurer votre environnement pour utiliser un serveur http local, merci de consulter [la documentation](https://developer.mozilla.org/fr/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server).
+
+Vous pouvez télécharger et tester le [code source de démarrage](./zip/csd.zip). 
+
+Le programme de démarrage ne fonctionne que
+lorsque vous l'ouvrez via un server local (http://localhost:port/). 
+Dans ce cas le navigateur affiche l'image de cette figure.
+
+Pour réaliser les questions suivantes vous commencez avec 
+le fichier <code>csd-tp1.html</code> de l'archive zip. 
+
+
+---
+class: left, top
+# TP 1 - Question 1 - affichage d'un repère 
+
+1. Ecrire une fonction nommée <code>repere</code> qui ne prend aucun paramètre mais 
+qui utilise la fonction <code>createArrow</code> présente dans le code source. 
+<br />Dans cette fonction, il s'agit de créer un début de graphe de scène. 
+Créer un groupe THREE, contenant la représentation des trois vecteurs de la base canonique (i, j et k). 
+Pour les distinguer, i, j, k doivent avoir des couleurs différentes. 
+On utilise les couleurs respectives rouge, vert, bleu. 
+<br />Du point de vue du graphe de scène, les trois vecteurs 
+i, j, k vont donc être considérés comme enfants du groupe créé et pour manipuler les trois vecteurs 
+ensemble, on agira sur leur groupe.
+<br />C'est pourquoi la fonction <code>repère</code> doit retourner le groupe comme résultat.
+
+2. Utiliser la fonction <code>repere</code> pour afficher le repère de la scène. Vous devez obtenir [ce résultat](img/repere-1.png).
+
+Vous pouvez utiliser [ce résumé](./zip/csd.zip) de la documentation utile pour le tp avant de commencer
+---
+class: left, top
+# TP 1 - Question 2 - Rotations simples
+Les évènements clavier sont gérés par la fonction <code>onkeydown</code> écrite dans le fichier de code source donné comme démarrage pour ce tp.
+
+Comme vous pouvez le constatez, le fait d'appuyer les flèches avec (ou sans) la touche <code>CTRL</code> affiche un message sur la console.  
+
+Par convention, 
+- les flèches haut (resp. bas) font une rotation horaire (resp. anti-horaire) par rapport à i.
+- Les flèches droite (resp. gauche) font une rotation anti-horaire (resp. horaire) par rapport à j. 
+- Les touches CTRL et flèche droite (resp. CTRL et flèche gauche), provoquent une rotation horaire (resp. anti-horaire) autour de l'axe k.
+- Enfin, appuyer sur la touche z remet le repère dans sa position initiale.
+
+
+Il vous reste à compléter la fonction pour obtenir des rotations horaires ou antihoraires sur chaque axe.
+- une rotation de PI/2 autour du vecteur i doit donner [ce résultat](img/repere-1-i.png). 
+- une rotation de PI/2 autour du vecteur j doit donner [ce résultat](img/repere-1-j.png).
+- une rotation de PI/2 autour du vecteur k doit donner [ce résultat](img/repere-1-k.png).
+- une rotation de -PI/4 autour du vecteur j doit donner [ce résultat](img/repere-1-j-4.png).
+
+---
+class: left, top
+# TP1 - Question 3 - composition de rotations d'axes différents
+
+Compositions de rotations d'angles PI/2 autour d'axes différents
+- une rotation de PI/2 autour du vecteur i suivi d'une rotation de PI/2 autour du vecteur j doit donner [ce résultat](img/repere-1-i-j.png) et
+- une rotation de PI/2 autour du vecteur j suivi d'une rotation de PI/2 autour du vecteur i doit donner [ce résultat](img/repere-1-j-i.png)
+Vous pouvez remarquer que la dernière instruction appelée est la première appliquée sur l'objet. 
+L'ordre est important car, comme l'illustre cet exemple, la rotation autour de vecteur différents n'est pas commutative.
+
+Compositions de rotations d'angles quelconque autour d'axes différents
+- faites la séquence de rotations suivante: 
+<br />(i,PI/10), (j, 2PI/10), (k, 3PI/10), (i,-PI/10),
+- enregistrer l'image résultante dans le fichier <code>img1.png</code>
+
+---
+class: left, top
+# TP1 - Question 4 - le soleil et les planètes
+
+Dans cet exercice, on utilise des sphères ([spheres de THREE](https://threejs.org/docs/#api/en/geometries/SphereGeometry)), 
+de tailles et de couleurs différentes, pour représenter le soleil et les planètes.
+
+- Ecrire une fonction qui prend comme paramètres, une couleur et un rayon, crée une sphère avec ces paramètres 
+et la retourne comme résultat. 
+ 
+Utiliser cette fonction pour créer le soleil, l'ajouter à la scène.
+Utiliser ensuite cette fonction pour créer les 8 planètes avec les rayons et les couleurs définis par:
+
+<code><pre>
+const rayons = [30,15,15,10,70,60,40,40];
+const couleurs = [0x666666, 0xff7f00, 0x008080, 0x800000, 
+0x00cc99, 0x004455, 0xffbb44, 0xff00aa];
+</pre></code>
+
+- chaque sphère est ensuite translatée le long du premier axe et espacée de sa voisine 
+de la somme de leurs rayons, comme illustré par la figure suivante.
+
+[![Le soleil et les planètes](./img/planetes-zoomed.png)](./img/planetes.png)
+
+---
+class: left, top
+# TP1 - Question 5 - rotations des planètes autour du soleil.
+- Changement de point de vue: placer la caméra au dessus du soleil.
+- Appliquer à chaque planète, une rotation affine, de centre le soleil, de vecteur j, 
+et d'angle i * PI/8, où i représente le rang de la planète dans la liste des planètes.
+Vous devez obtenir ![ce résultat](img/planetes-2.png).
+
+- Placer la caméra en (1000,1000,3000), et appliquer la même transformation (une rotation affine, de centre le soleil, de vecteur j, 
+et d'angle i * PI/8, où i représente le rang de la planète dans la liste des planètes).
+- enregistrer l'image résultante dans le fichier <code>img2.png</code>
+- créer une animation qui assure que la rotation des planètes continue.
+
+---
+class: left, top
+# TP1 - Question 6 - création d'un vaisseau spatial
+- Pour représenter le vaisseau spatial, on utilise [le tore de THREE](https://threejs.org/docs/index.html#api/en/geometries/TorusGeometry).
+- Dans le graphe de scène, le vaisseau doit être enfant direct du repère. 
+- Translater le repère de <code>(0,1000,0).</code>
+- Donner au vaisseau un micro-déplacement à chaque pas d'animation. La direction du déplacement sera choisie aléatoirement à chaque pas entre i,  j et k.
+Le déplacement est aléatoire, mais contraint par les bornes de l'espace de la scène. Lorsque le vaisseau atteint une borne, 
+il est automatiquement repositionné à sa position initiale.
+- enregistrer l'image résultante dans le fichier <code>img3.png</code>
+
+---
+class: left, top
+# TP1 - Question 7 - Arrivée du vaisseau spatial
+1. calculer la distance entre le plan formé par les vecteurs i et k du repère du vaisseau et la planète terre. 
+Pour ce calcul, on vous demande de passer par les étapes suivantes:
+	- compléter le fichier algebre.js avec le calcul des matrices de rotations selon les trois axes, 
+le produit de matrices, l'application d'une matrice à un vecteur et le produit vectoriel de deux vecteurs.
+	- créer une matrice 4x4 qui mémorise les rotations de la planète terre. En déduire les coordonnées de son centre.
+	- créer une matrice 4x4 qui mémorise les rotations du repère du vaisseau. 
+En déduire les coordonnées des vecteurs i et k du repère (après l'application des transformations).	
+	- calculer le produit vectoriel des deux vecteurs i et k, en déduire les coefficients a,b,c,d du plan formé par i et k. 
+Afficher le vecteur résultant pour vérifier visuellement la validité (approximative de votre calcul).
+	- enregistrer l'image résultante dans le fichier <code>img4.png</code>
+	
+2. écrire une fonction qui met en oeuvre ce calcul en prenant les coordonnées courantes de la terre et du vaisseau.
+3. écrire le test d'arrivée (lorsque le vaisseau passe à une distance inférieure au diamètre (fictif) 
+donné pour la terre, on peut le considérer comme étant arrivé). Et mettre le vaisseau en orbite lorsqu'il passe le test.
+	 
+
+
+</textarea>
+</body>
+<script src="./js/remark.min.js" type="text/javascript"></script>
+<script type="text/javascript">var slideshow = remark.create();</script>
+</html>

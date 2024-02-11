@@ -1,0 +1,2 @@
+2024-01-22 17:50:47 [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - createLocationMapper: Failed to find configuration: location-mapping.ttl;location-mapping.rdf;etc/location-mapping.rdf;etc/location-mapping.ttl
+2024-01-27 17:08:24 [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - createLocationMapper: Failed to find configuration: location-mapping.ttl;location-mapping.rdf;etc/location-mapping.rdf;etc/location-mapping.ttl

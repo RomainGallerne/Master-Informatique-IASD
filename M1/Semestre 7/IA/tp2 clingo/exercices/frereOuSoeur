@@ -1,0 +1,14 @@
+% base de fait
+parent(a,c).
+parent(a,d).
+parent(a,e).
+parent(b,c).
+parent(b,d).
+parent(b,e).
+
+% base de règle
+frereOuSoeur(X,Y) :- parent(Z,X), parent(Z,Y), X!=Y, not frereOuSoeur(Y,X).
+:- frereOuSoeur(X,X).
+
+% affichage
+#show frereOuSoeur/2.

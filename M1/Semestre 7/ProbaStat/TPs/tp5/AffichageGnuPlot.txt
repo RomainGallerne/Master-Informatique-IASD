@@ -1,0 +1,8 @@
+plot "q2/dppCouple.dat" using 1:2 title "dpp" with lines lt rgb "red"
+replot (1/sqrt(2*pi*ECA))*exp((-(x-MOY)*(x-MOY))/(2*VAR))
+
+MoyenneX 123.177197
+Variance 1604.860622
+Eca-Type 40.060712
+
+replot (1/sqrt(2*pi)*40.060712)*exp(-((x-123.177197)*(x-123.177197))/(2*1604.860622))

@@ -1,0 +1,78 @@
+# nos prefix
+@prefix : <http://www.umontpellier.fr/traitementsemantiquedesdonnees#> .
+@prefix medical : <http://www.medicalRDF.org> .
+@prefix maladie : <http://www.maladieRDF.org> .
+@prefix device : <http://www.deviceRDF.org> .
+
+# prefix communs
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+#Emily
+:P12345 rdf:type foaf:Person .
+:P12345 foaf:name "Emily" .
+:P12345 foaf:familyname _:NomInconnu .
+:P12345 foaf:age  _:AgeInconnu .
+
+:P12345 device:own device:SmartRing .
+:P12345 device:own device:SmartWatch .
+:P12345 medical:heartRateBPM "78"^^xsd:integer .
+:P12345 medical:stepTake_25-01-2024 "8500"^^xsd:integer .
+
+
+
+#Alice
+:P1 rdf:type foaf:Person .
+:P1 foaf:name "Alice" .
+:P1 foaf:familyname _:NomInconnu .
+:P1 foaf:age "30"^^xsd:integer .
+
+:P1 maladie:condition maladie:Hypertension .
+
+
+
+#Bob
+:P2 rdf:type foaf:Person .
+:P2 foaf:name "Bob" .
+:P2 foaf:familyname _:NomInconnu .
+:P2 foaf:age "25"^^xsd:integer .
+
+:P2 maladie:condition maladie:Allergy .
+
+
+
+#Charlie
+:P3 rdf:type foaf:Person .
+:P3 foaf:name "Charlie" .
+:P3 foaf:familyname _:NomInconnu .
+:P3 foaf:age "40"^^xsd:integer .
+
+:P3 maladie:condition maladie:Diabetes .
+
+
+
+#Jean
+:JDP123 rdf:type foaf:Person .
+:JDP123 foaf:name "Jean" .
+:JDP123 foaf:familyname "Dupont" .
+:JDP123 foaf:age "58"^^xsd:integer .
+
+:JDP123 maladie:condition maladie:Diabetes .
+:JDP123 maladie:condition maladie:Hypertension .
+
+
+
+#John
+:JOH600 rdf:type foaf:Person .
+:JOH600 foaf:name "John" .
+:JOH600 foaf:familyname _:NomInconnu .
+:JOH600 foaf:age  _:AgeInconnu .
+
+:JOH600 medical:prescription medical:Metformine .
+:JOH600 medical:pressionSang "140/90mmHg" .
+:JOH600 medical:tauxSucre "180mg/dL" .

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Documentation utile pour le tp utilisant THREE.js</title>
+</head>
+<body>
+	<h1>Documentation utile pour le tp utilisant THREE.js</h1>
+	<h2 id="configuration">Configuration</h2>
+	<p>
+		Pour utiliser la bibliothèque THREE.js, plusieurs configurations sont envisageables.
+		Le code source de démarrage est une solution minimaliste dont l'objectif est de
+		réduire au maximum les dépendances.
+	</p>
+	<p>
+		Malgré cela, vous ne pouvez l'utiliser sans un serveur local.
+		Comme serveur local, vous pouvez utiliser le server http de python. Pour le lancer, utiliser le terminal, placez vous dans votre répertoire de travail et utiliser
+		la commande: <code>python -m http.server</code>.
+	</p>
+	<p>
+		Lorsque le serveur local est lancé de cette manière, vous accédez à vos pages par l'url <a href="http://localhost:8000"><code>http://localhost:8000</code></a>.
+	</p>
+	<p>
+		Pour plus d'informations, vous pouvez consulter <a href="https://developer.mozilla.org/fr/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server">la documentation Mozilla</a>.
+	</p>
+	<h2 id="configuration">Un exemple simple de programme THREE</h2>
+	<p>
+		Pour ceux qui n'ont jamais utilisé THREE.js, vous pouvez étudier l'exemple minimaliste de la documentation avant de commencer à essayer de faire le tp.
+		<a href="https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene">la documentation THREE.js</a>.
+	</p>
+	<h2 id="configuration">Résumé des notions utiles pour le tp</h2>
+	<p>
+		Un programme THREE.js comprend au minimum:
+		<ol>
+			<li>l'importation du module THREE</li>
+			<li>
+				la création d'une caméra.
+				<p>
+					Dans cet exercice, on utilisera une caméra orthographique. <br /> la création d'une caméra orthographique avec THREE.js permet de définir plusieurs choses:
+					<ul>
+						<li>un volume dans lequel les objets de la scène seront placés. Ce volume est un parallélogramme limité par des <a href="#clipping">plans de clipping</a></li>
+						<li>un point de vue (correspondant à la position de la caméra. Par exemple, <code>camera.position.set(1000, 1000, 3000);</code> place la caméra aux coordonnées: 1000, 1000, 3000) à partir duquel les objets seront vus</li>
+						<li>
+							une direction (vecteur reliant la position de la caméra à l'endroit de la scène pointé par la caméra).
+							Par exemple, <code>camera.position.set(1000, 1000, 3000); camera.lookAt(100, 200, 300); </code>définit le vecteur de coordonnées (-900, -800, -2700)
+						</li>
+					</ul>
+
+					<ul><li>Les paramètres de création d'une caméra sont détaillés dans la <a href="https://threejs.org/docs/index.html#api/en/cameras/OrthographicCamera">documentation THREE.js</a></li></ul>
+				</p>
+			</li>
+			<li>
+				la création d'un renderer.
+				<p>
+					le renderer de THREE est l'objet qui  permet de configurer les étapes conduisant à l'affichage de la scène à l'écran.
+					Par exemple, <code>new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });</code>
+					permet de faire paramétrer deux opérations (l'anti-crénelage et la persistance du buffer d'écran). Cette configuration répond aux besoins du tp
+					mais elle n'est pas optimale du point de vue des performances.
+					Comme la scène à afficher pour le tp comporte peu d'objets, cette configuration est possible mais d'autres configurations sont à envisager pour d'autres contextes.
+					<ul><li>Dans cet exercice on utilisera un <code>WebGLRenderer</code> et ses paramètres sont détaillés dans la <a href="https://threejs.org/docs/index.html#api/en/renderers/WebGLRenderer">documentation THREE.js</a></li></ul>
+				</p>
+			</li></ul>
+			<li>
+				la création d'objets graphiques.
+				<p>
+					Les objets graphiques constituent les briques de base de la scène. Ces objets peuvent être structurés dans un graphe de scène.
+					Le graphe de scène le plus simple consiste à construire une hiérarchie des objets de la scène de sorte à simplifier les déplacements, les modifications, les interactions.
+					Sauf exception, les objets graphiques THREE peuvent être créés à partir <ul><li>d'une géométrie</li><li>d'un matériau</li></ul>.
+					<br />La géométrie définit les coordonnées des sommets qui vont permettre de construire le maillage de l'objet.
+					<br />Le matériau définit les paramètres graphiques qui habillent la forme de l'objet (couleur, texture, etc).
+
+				</p>
+				<p>
+					Pour plus d'informations:
+					<ul>
+
+						<li>Un exemple simple de graphe de scène est présenté sur <a href="https://discoverthreejs.com/book/first-steps/transformations/#the-scene-graph">discoverthreejs.com</a></li>
+						<li><a href="https://chriscourses.com/blog/a-comprehensive-guide-to-materials-in-threejs">des exemples d'usage des matériaux.</a></li>
+						<li>
+							Les géométries utiles pour ce tp:
+							<ul>
+								<li><a href="https://threejs.org/docs/index.html#api/en/geometries/TorusGeometry">le tore</a> (pour le vaisseau)</li>
+								<li><a href="https://threejs.org/docs/index.html#api/en/geometries/SphereGeometry">la sphere</a> (pour le soleil et les planètes)</li>
+								<li><a href="https://threejs.org/docs/index.html#api/en/core/BufferGeometry">les nuages de points</a> (pour les repères et pour les étoiles)</li>
+							</ul>
+						</li>
+					</ul>
+				</p>
+			</li>
+
+			<li>
+				la création de gestionnaires d'évènements
+				<p>
+					Les gestionnaires d'évènements sont des fonctions qui sont appelées lorsque l'utilisateur agit sur les dispositifs d'entrée.
+					Dans cet exercice, deux gestionnaires d'évènements ont été définis.
+					L'un pour gérer les évènements de type souris (lorsque l'utilisateur appuie sur l'un des boutons de la souris).
+					L'autre pour gérer les entrées clavier. Ces deux gestionnaires d'évènements sont à compléter.
+
+				</p>
+			</li>
+		</ol>
+
+
+	</p>
+	
+		<h1>Vocabulaire</h1>
+		<dl>
+			<dt id="clipping">Plan de clipping</dt>
+			<dl>
+				Un plan de clipping désigne un plan qui délimite une scène virtuelle.
+				Il est d'usage qu'une scène 3D virtuelle possède 6 plans de clipping (avant, arrière, gauche, droite, bas et haut).
+				Ces 6 plans définissent donc le volume dans laquelle la scène prend forme. Seuls les objets de la scène localisés
+				à l'intérieur de ce volume sont affichés. Il peut donc arriver que des objets ajoutés à une scène ne s'affichent pas.
+				C'est le cas de tous les objets, qui peuvent se trouver, après l'application de quelques transformations,
+				localisés au delà des plans de clipping.
+			</dl>
+		</dl>
+
+</body>
+</html>

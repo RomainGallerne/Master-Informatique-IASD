@@ -1,0 +1,19 @@
+% base de fait
+herbivore(chevre).
+carnivore(loup).
+humain(chaperon).
+
+
+% règles
+animal(X):-herbivore(X).
+animal(X):-carnivore(X).
+
+%carnivore(X):-omnivore(X).
+%herbivore(X):-omnivore(X).
+animal(X):-omnivore(X).
+
+omnivore(X):-humain(X).
+animal(X):-carnivore(Y),mange(Y,X).
+plante(X):-herbivore(Y),mange(Y,X).
+mange(X,Y):-carnivore(X),herbivore(Y),X!=Y.
+:-animal(X),plante(X). %contrainte négative

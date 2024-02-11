@@ -1,0 +1,10 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix  : <http://example.org/> .
+
+ :Alice a  :Person ;
+           :hasID "P123"^^xsd:string .
+
+ :Bob a  :Employee ;
+         :worksAt  :XYZ_Corp ;
+         :hasID "E456"^^xsd:string .

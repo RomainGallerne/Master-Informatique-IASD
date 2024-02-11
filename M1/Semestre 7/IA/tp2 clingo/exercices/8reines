@@ -1,0 +1,56 @@
+%base de faits
+reine(rA;rB;rC;rD;rE;rF;rG;rH).
+ligne(un;deux;trois;quatre;cinq;six;sept;huit).
+
+suivR(rA,rB).
+suivR(rB,rC).
+suivR(rC,rD).
+suivR(rD,rE).
+suivR(rE,rF).
+suivR(rF,rG).
+suivR(rG,rH).
+
+suivL(un,deux).
+suivL(deux,trois).
+suivL(trois,quatre).
+suivL(quatre,cinq).
+suivL(cinq,six).
+suivL(six,sept).
+suivL(sept,huit).
+
+%interdits
+:-placement(R1,L),placement(R2,L),R1!=R2.
+
+:-suivR(R1,R2),suivL(L1,L2),placement(R1,L1),placement(R2,L2).
+:-suivR(R1,R2),suivR(R2,R3),suivL(L1,L2),suivL(L2,L3),placement(R1,L1),placement(R3,L3).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivL(L1,L2),suivL(L2,L3),suivL(L3,L4),placement(R1,L1),placement(R4,L4).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivL(L1,L2),suivL(L2,L3),suivL(L3,L4),suivL(L4,L5),placement(R1,L1),placement(R2,L2),placement(R5,L5).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivL(L1,L2),suivL(L2,L3),suivL(L3,L4),suivL(L4,L5),suivL(L5,L6),placement(R1,L1),placement(R6,L6).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivR(R6,R7),suivL(L1,L2),suivL(L2,L3),suivL(L3,L4),suivL(L4,L5),suivL(L5,L6),suivL(L6,L7),placement(R1,L1),placement(R7,L7).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivR(R6,R7),suivR(R7,R8),suivL(L1,L2),suivL(L2,L3),suivL(L3,L4),suivL(L4,L5),suivL(L5,L6),suivL(L6,L7),suivL(L7,L8),placement(R1,L1),placement(R8,L8).
+
+:-suivR(R1,R2),suivL(L2,L1),placement(R1,L1),placement(R2,L2).
+:-suivR(R1,R2),suivR(R2,R3),suivL(L2,L1),suivL(L3,L2),placement(R1,L1),placement(R3,L3).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivL(L2,L1),suivL(L3,L2),suivL(L4,L3),placement(R1,L1),placement(R4,L4).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivL(L2,L1),suivL(L3,L2),suivL(L4,L3),suivL(L5,L4),placement(R1,L1),placement(R5,L5).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivL(L2,L1),suivL(L3,L2),suivL(L4,L3),suivL(L5,L4),suivL(L6,L5),placement(R1,L1),placement(R6,L6).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivR(R6,R7),suivL(L2,L1),suivL(L3,L2),suivL(L4,L3),suivL(L5,L4),suivL(L6,L5),suivL(L7,L6),placement(R1,L1),placement(R7,L7).
+:-suivR(R1,R2),suivR(R2,R3),suivR(R3,R4),suivR(R4,R5),suivR(R5,R6),suivR(R6,R7),suivR(R7,R8),suivL(L2,L1),suivL(L3,L2),suivL(L4,L3),suivL(L5,L4),suivL(L6,L5),suivL(L7,L6),suivL(L8,L7),placement(R1,L1),placement(R8,L8).
+
+
+%base de règles
+placement(R,un):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,quatre),not placement(R,cinq),not placement(R,six), not placement(R,sept), not placement(R,huit).
+placement(R,deux):-reine(R),not placement(R,un),not placement(R,trois),not placement(R,quatre),not placement(R,cinq),not placement(R,six), not placement(R,sept), not placement(R,huit).
+placement(R,trois):-reine(R),not placement(R,deux),not placement(R,un),not placement(R,quatre),not placement(R,cinq),not placement(R,six), not placement(R,sept), not placement(R,huit).
+placement(R,quatre):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,un),not placement(R,cinq),not placement(R,six), not placement(R,sept), not placement(R,huit).
+placement(R,cinq):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,quatre),not placement(R,un),not placement(R,six), not placement(R,sept), not placement(R,huit).
+placement(R,six):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,quatre),not placement(R,cinq),not placement(R,un), not placement(R,sept), not placement(R,huit).
+placement(R,sept):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,quatre),not placement(R,cinq),not placement(R,six), not placement(R,un), not placement(R,huit).
+placement(R,huit):-reine(R),not placement(R,deux),not placement(R,trois),not placement(R,quatre),not placement(R,cinq),not placement(R,six), not placement(R,sept), not placement(R,un).
+
+
+%affichage
+#show placement/2.
+
+%reponse(A,B,C,D,E,F,G,H):-ligne(A),ligne(B),ligne(C),ligne(D),ligne(E),ligne(F),ligne(G),ligne(H),A!=B,B!=C,C!=D,D!=E,E!=F,F!=G,G!=H,placement(rA,A),placement(rB,B),placement(rC,C),placement(rD,D),placement(rE,E),placement(rF,F),placement(rG,G),placement(rH,H).
+%#show reponse/8.

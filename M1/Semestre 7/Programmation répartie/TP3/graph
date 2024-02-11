@@ -1,0 +1,11 @@
+c FILE : graph
+c
+p edge 4 11
+e 1 2
+e 1 4
+e 2 1
+e 2 3
+e 3 2
+e 3 4
+e 4 1
+e 4 3

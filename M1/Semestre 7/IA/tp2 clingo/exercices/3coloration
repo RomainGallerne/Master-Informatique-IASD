@@ -1,0 +1,29 @@
+% base de fait
+sommet(sa).
+sommet(nt).
+sommet(wa).
+sommet(nsw).
+sommet(q).
+sommet(v).
+sommet(t).
+arrete(wa,nt).
+arrete(wa,sa).
+arrete(nt,q).
+arrete(sa,q).
+arrete(nt,sa).
+arrete(sa,nsw).
+arrete(q,nsw).
+arrete(v,nsw).
+arrete(v,sa).
+
+% interdits
+:-arrete(X,Y),colore(X,C),colore(Y,C). %Deux sommets reliés n'ont pas la mm couleur
+:-sommet(X),colore(X,C),colore(X,D),C!=D. %Un sommet n'a qu'une couleur
+
+% règles d'assignations
+colore(X,bleu):-not colore(X,rouge),not colore(X,vert),sommet(X).
+colore(X,vert):-not colore(X,bleu),not colore(X,rouge),sommet(X).
+colore(X,rouge):-not colore(X,bleu),not colore(X,vert),sommet(X).
+
+% affichage
+#show colore/2.

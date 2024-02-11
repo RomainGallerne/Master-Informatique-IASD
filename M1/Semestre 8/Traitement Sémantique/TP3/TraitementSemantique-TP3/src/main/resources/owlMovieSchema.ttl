@@ -1,0 +1,16 @@
+@prefix movies: <http://www.lirmm.fr/ulliana/movies#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbp: <http://dbpedia.org/> .
+
+movies:directedBy rdfs:domain movies:Movie .
+movies:title rdfs:domain movies:Movie .
+movies:directedBy rdfs:range movies:Director .
+movies:playsIn rdfs:domain movies:Actor .
+movies:playsIn rdfs:range movies:Movie .
+movies:Actor rdfs:subClassOf movies:Artist .
+movies:Director rdfs:subClassOf movies:Artist .
+movies:title rdf:type owl:DataTypeProperty .
+movies:title rdfs:domain movies:Movie .
+movies:Director rdfs:subClassOf movies:Artist .

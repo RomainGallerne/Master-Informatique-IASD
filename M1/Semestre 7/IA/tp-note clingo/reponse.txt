@@ -1,0 +1,187 @@
+% Famille Oedipe
+
+
+% BASE DE FAITS 
+
+% personnage est un prédicat unaire
+% on utilise une écriture raccourcie permise par Clingo: 
+% p(a;b). est un raccourci pour p(a). p(b). 
+% Ne pas confondre p(a;b) et p(a,b) : écriture raccourcie pour prédicat unaire, et prédicat binaire !
+personnage(agenor;cadmos;harmonie;ino;agave;polydore;labdacos;nicteis;penthe;oclasos).
+personnage(menecee;jocaste;creon;hemon;eurydice;laios;oedipe).
+personnage(antigone;ismene;eteocle;polynice;thersandre;ladamos).
+
+% sexe des personnages
+homme(agenor). % agénor
+homme(cadmos).
+femme(harmonie).
+femme(ino).
+femme(agave).	  % agavé
+homme(polydore).
+homme(labdacos).
+femme(nicteis).   % nictéis
+homme(penthe). % penthé
+homme(oclasos). 
+homme(menecee). % ménécée
+femme(jocaste).
+homme(creon).   % créon
+homme(hemon). % hémon
+femme(eurydice).
+homme(laios).
+homme(oedipe).
+femme(antigone).
+femme(ismene).   % ismène
+homme(eteocle). % étéocle
+homme(polynice).
+homme(thersandre).
+homme(ladamos).
+
+% relations parent-enfant
+aEnfant(agenor,cadmos).
+aEnfant(cadmos,ino).
+aEnfant(cadmos,agave).
+aEnfant(cadmos,polydore).
+aEnfant(harmonie,ino).
+aEnfant(harmonie,agave).
+aEnfant(harmonie,polydore).
+aEnfant(polydore,labdacos).
+aEnfant(nicteis,labdacos).
+aEnfant(agave,penthe).
+aEnfant(labdacos,laios).
+aEnfant(penthe,oclasos).
+aEnfant(oclasos,menecee).
+aEnfant(menecee,jocaste).
+aEnfant(menecee,creon).
+aEnfant(creon,hemon).
+aEnfant(eurydice,hemon). 
+aEnfant(laios,oedipe).
+aEnfant(jocaste,oedipe).
+aEnfant(jocaste,antigone).
+aEnfant(jocaste,eteocle).
+aEnfant(jocaste,ismene).
+aEnfant(jocaste,polynice).
+aEnfant(oedipe,antigone).
+aEnfant(oedipe,eteocle).
+aEnfant(oedipe,ismene).
+aEnfant(oedipe,polynice).
+aEnfant(polynice, thersandre). 
+aEnfant(eteocle,ladamos). 
+
+% les rois
+roi(agenor,tyr).
+roi(cadmos,thebes).	% thèbes
+roi(penthe,thebes).
+roi(creon, thebes).
+roi(oedipe,thebes).
+roi(eteocle,thebes).
+roi(ladamos,thebes). 
+
+% reponses
+
+estSoeur(X,Y):-aEnfant(A,X),aEnfant(A,Y),femme(X),X!=Y.
+estTante(X,Y):-estSoeur(X,P),aEnfant(P,Y).
+aAuMoins2Enfants(X):-aEnfant(X,E),aEnfant(X,F),E!=F.
+aAuMoins3Enfants(X):-aEnfant(X,E),aEnfant(X,F),aEnfant(X,G),E!=F,F!=G,E!=G.
+aExactement2Enfants(X):-aAuMoins2Enfants(X),not aAuMoins3Enfants(X).
+aEnfantUnique(X):-aEnfant(X,Y),not aAuMoins2Enfants(X).
+ancetre(X,Y):-aEnfant(X,Y).
+ancetre(X,Y):-ancetre(X,Z),ancetre(Z,Y).
+ancetreFemmeAntigone(X):-ancetre(X,antigone),femme(X).
+
+ancetreCommun(Z,X,Y):-ancetre(Z,X),ancetre(Z,Y),X!=Y.
+descendantAussiAncetreCommun(Z,X,Y):-ancetreCommun(Z,X,Y),ancetre(Z,U),ancetreCommun(U,X,Y),X!=Y.
+ppAncetreCommun(Z,X,Y):-ancetreCommun(Z,X,Y),not descendantAussiAncetreCommun(Z,X,Y).
+
+ppAncetreCommunLaiosHemon(X):-ppAncetreCommun(X,laios,hemon).
+ppAncetreCommunAntigonePolynice(X):-ppAncetreCommun(X,antigone,polynice).
+
+%#show estSoeur/2.
+%#show estTante/2.
+%#show aAuMoins2Enfants/1.
+%#show aAuMoins3Enfants/1.
+%#show aExactement2Enfants/1.
+%#show aEnfantUnique/1.
+%#show ancetre/2.
+%#show ancetreFemmeAntigone/1.
+%#show ppAncetreCommun/3.
+%#show ppAncetreCommunLaiosHemon/1.
+%#show ppAncetreCommunAntigonePolynice/1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Coloration
+
+% base de fait
+sommet(sa).
+sommet(nt).
+sommet(wa).
+sommet(nsw).
+sommet(q).
+sommet(v).
+sommet(t).
+arrete(wa,nt).
+arrete(wa,sa).
+arrete(nt,q).
+arrete(sa,q).
+arrete(nt,sa).
+arrete(sa,nsw).
+arrete(q,nsw).
+arrete(v,nsw).
+arrete(v,sa).
+
+col1(rouge).
+col2(vert).
+col3(jaune).
+
+% interdits
+:-arrete(X,Y),colore(X,C),colore(Y,C). %Deux sommets reliés n'ont pas la mm couleur
+:-sommet(X),colore(X,C),colore(X,D),C!=D. %Un sommet n'a qu'une couleur
+
+% règles d'assignations
+colore(X,C1):-not colore(X,C2),not colore(X,C3),sommet(X),col1(C1),col2(C2),col3(C3).
+colore(X,C2):-not colore(X,C1),not colore(X,C3),sommet(X),col1(C1),col2(C2),col3(C3).
+colore(X,C3):-not colore(X,C1),not colore(X,C2),sommet(X),col1(C1),col2(C2),col3(C3).
+
+% affichage
+#show colore/2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Noix
+
+% Base de faits
+noix(n1;n2;n3;n4;n5;n6;n7;n8;n9;n10).
+
+% regles de l'énnoncé
+bonne(n1).
+:-bonne(Na),bonne(Nb),Na!=Nb.
+
+% Base de règles
+bonne(N):-not pourrie(N),noix(N).
+pourrie(N):-not bonne(N),noix(N).
+
+% interdits
+:-noix(N),bonne(N),pourrie(N). %Une noix est soit bonne soit pourrie
+
+#show bonne/1.
+#show pourrie/1.
