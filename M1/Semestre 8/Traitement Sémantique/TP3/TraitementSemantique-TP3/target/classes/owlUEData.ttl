@@ -1,0 +1,373 @@
+@prefix tsd: <http://www.umontpellier.fr/traitementsemantiquedesdonnees#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#Mon seigneur Laurent de médicis
+tsd:Lord_laurent rdf:type foaf:Marteau_piqueur .
+tsd:Lord_laurent foaf:mail "laurent.antoinette@etu.umontpellier.fr" .
+tsd:Lord_laurent foaf:name "Laurent" .
+tsd:Lord_laurent foaf:familyname "Lord" .
+
+#Lien entre Laurent et autre
+tsd:Lord_laurent tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Lord_laurent tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:Lord_laurent tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Lord_laurent tsd:personalFriend tsd:Thomas_Geoffroy .
+tsd:Lord_laurent tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Lord_laurent tsd:personalFriend tsd:Loreena_Barrere .
+
+#Romain
+tsd:romain_campillo rdf:type foaf:Person .
+tsd:romain_campillo foaf:mail "romain.campillo@etu.umontpellier.fr" .
+tsd:romain_campillo foaf:name "Romain" .
+tsd:romain_campillo foaf:familyname "Campillo" .
+
+tsd:romain_campillo tsd:socialFriend tsd:tsd:Lord_laurent .
+tsd:romain_campillo tsd:personalFriend tsd:Lord_laurent .
+tsd:romain_campillo tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:romain_campillo tsd:socialFriend tsd:Thomas_Geoffroy .
+
+#Marta
+tsd:marta_boshkovska rdf:type foaf:Person .
+tsd:marta_boshkovska foaf:mail "marta.boshkovska@etu.umontpellier.fr" .
+tsd:marta_boshkovska foaf:name "Marta" .
+tsd:marta_boshkovska foaf:familyname "Boshkovska" .
+
+#Lien Marta
+tsd:marta_boshkovska tsd:socialFriend tsd:laurencia_dovi-late .
+tsd:marta_boshkovska tsd:personalFriend tsd:laurencia_dovi-late .
+tsd:marta_boshkovska tsd:socialFriend tsd:Ibrahim_Simpara .
+tsd:marta_boshkovska tsd:socialFriend tsd:Tai_Nguyen .
+tsd:marta_boshkovska tsd:socialFriend tsd:g_n .
+tsd:marta_boshkovska tsd:socialFriend tsd:rafik_amara .
+
+#Laurencia
+tsd:laurencia_dovi-late rdf:type foaf:Person .
+tsd:laurencia_dovi-late foaf:mail "laurencia.dovi-late@etu.umontpellier.fr" .
+tsd:laurencia_dovi-late foaf:name "Laurencia" .
+tsd:laurencia_dovi-late foaf:familyname "Dovi-Late" .
+
+#Lien Laurencia
+tsd:laurencia_dovi-late
+tsd:socialFriend
+tsd:marta_boshkovska .
+tsd:laurencia_dovi-late
+tsd:personalFriend
+tsd:marta_boshkovska .
+tsd:laurencia_dovi-late
+tsd:socialFriend
+tsd:g_n .
+
+# Adam
+tsd:Adam_ElHorri rdf:type foaf:Person .
+tsd:Adam_ElHorri foaf:mail "adam.el-horri@etu.umontpellier.fr" .
+tsd:Adam_ElHorri foaf:name "Adam" .
+tsd:Adam_ElHorri foaf:familyname "ElHorri" .
+
+#Jules
+tsd:jules_cassan rdf:type foaf:Person .
+tsd:jules_cassan foaf:mail "jules.cassan@etu.umontpellier.fr" .
+tsd:jules_cassan foaf:name "Jules" .
+tsd:jules_cassan foaf:familyname "Cassan" .
+
+#Lien entre Jules et autre
+tsd:jules_cassan tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:jules_cassan  tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:jules_cassan  tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:jules_cassan  tsd:personalFriend tsd:Thomas_Geoffroy .
+tsd:jules_cassan  tsd:socialFriend tsd:Loreena_Barrere .
+tsd:jules_cassan  tsd:personalFriend tsd:Loreena_Barrere .
+
+#Loreena
+tsd:Loreena_Barrere rdf:type foaf:Person .
+tsd:Loreena_Barrere foaf:mail "loreena.barrere@etu.umontpellier.fr" .
+tsd:Loreena_Barrere foaf:name "Loreena" .
+tsd:Loreena_Barrere foaf:familyname "Barrere" .
+
+#Lien entre Loreena et autre
+tsd:Loreena_Barrere tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Loreena_Barrere tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:Loreena_Barrere tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Loreena_Barrere tsd:personalFriend tsd:Thomas_Geoffroy .
+tsd:Loreena_Barrere tsd:socialFriend tsd:jules_cassan .
+tsd:Loreena_Barrere tsd:personalFriend tsd:jules_cassan .
+tsd:Loreena_Barrere tsd:socialFriend tsd:Adam_ElHorri .
+tsd:Loreena_Barrere tsd:socialFriend tsd:Tai_Nguyen .
+
+# Gurgun Dayioglu
+tsd:g_d rdf:type foaf:Person .
+tsd:g_d foaf:mail "gd@gmail.com" .
+tsd:g_d foaf:name "Gurgun" .
+tsd:g_d foaf:familyname "Dayioglu" .
+tsd:g_d tsd:socialFriend tsd:marta_boshkovska .
+tsd:g_d tsd:personalFriend tsd:loris_gp .
+
+#Thomas
+tsd:Thomas_Geoffroy rdf:type foaf:Person .
+tsd:Thomas_Geoffroy foaf:mail "thomas.geoffroy@etu.umontpellier.fr" .
+tsd:Thomas_Geoffroy foaf:name "Thomas" .
+tsd:Thomas_Geoffroy foaf:familyname "Geoffroy" .
+
+#Lien entre Thomas et autre
+tsd:Thomas_Geoffroy tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Thomas_Geoffroy tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:Thomas_Geoffroy tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Thomas_Geoffroy tsd:personalFriend tsd:Loreena_Barrere .
+tsd:Thomas_Geoffroy tsd:socialFriend tsd:jules_cassan .
+tsd:Thomas_Geoffroy tsd:personalFriend tsd:jules_cassan .
+
+#Ayman
+tsd:ayman_benazzouz rdf:type foaf:Person .
+tsd:ayman_benazzouz foaf:mail "ayman.benazzouz@etu.umontpellier.fr" .
+tsd:ayman_benazzouz foaf:name "Ayman" .
+tsd:ayman_benazzouz foaf:familyname "Benazzouz" .
+tsd:ayman_benazzouz tsd:socialFriend tsd:mohamed_dahmoun .
+tsd:ayman_benazzouz tsd:personalFriend tsd:mohamed_dahmoun .
+
+#Momo
+tsd:mohamed_dahmoun rdf:type foaf:Person .
+tsd:mohamed_dahmoun  foaf:mail "mohamed.dahmoun@etu.umontpellier.fr" . tsd:mohamed_dahmoun  foaf:name "Mohamed" .
+tsd:mohamed_dahmoun  foaf:familyname "Dahmoun" .
+tsd:mohamed_dahmoun  tsd:socialFriend tsd:ayman_benazzouz .
+tsd:mohamed_dahmoun  tsd:personalFriend tsd:ayman_benazzouz .
+
+#Tai
+tsd:Tai_Nguyen rdf:type foaf:Person .
+tsd:Tai_Nguyen foaf:mail "tai.nguyen@xvideo.com" .
+tsd:Tai_Nguyen foaf:name "Tai" .
+tsd:Tai_Nguyen foaf:familyname "Nguyen" .
+
+#Lien entre Tai et autre
+tsd:Tai_Nguyen tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Tai_Nguyen tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:Tai_Nguyen tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Tai_Nguyen tsd:personalFriend tsd:Loreena_Barrere .
+tsd:Tai_Nguyen tsd:socialFriend tsd:jules_cassan .
+tsd:Tai_Nguyen tsd:personalFriend tsd:jules_cassan .
+tsd:Tai_Nguyen tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Tai_Nguyen tsd:personalFriend tsd:Thomas_Geoffroy .
+
+#Raf
+tsd:rafik_amara rdf:type foaf:Person .
+tsd:rafik_amara foaf:mail "rafik.amara@etu.umontpellier.fr" .
+tsd:rafik_amara foaf:name "Rafik" .
+tsd:rafik_amara foaf:familyname "Amara" .
+
+#Lien entre Raf et le peuple
+tsd:rafik_amara tsd:personalFriend tsd:Thomas_Geoffroy .
+tsd:rafik_amara tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:rafik_amara tsd:personalFriend tsd:Tai_Nguyen .
+tsd:rafik_amara tsd:personalFriend tsd:Ibrahim_Simpara .
+tsd:rafik_amara tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:rafik_amara tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:rafik_amara tsd:socialFriend tsd:Loreena_Barrere .
+tsd:rafik_amara tsd:socialFriend tsd:Ibrahim_Simpara .
+tsd:rafik_amara tsd:socialFriend tsd:marta_boshkovska .
+tsd:rafik_amara tsd:socialFriend tsd:amaury_rebillard .
+tsd:rafik_amara tsd:socialFriend tsd:Adam_ElHorri .
+
+
+#Otya
+tsd:otya_kikadidi-zoula rdf:type foaf:Person .
+tsd:otya_kikadidi-zoula foaf:mail "Otya.kikadidi-zoula@etu.umontpellier.fr" .
+tsd:otya_kikadidi-zoula foaf:name "Otya" .
+tsd:otya_kikadidi-zoula foaf:familyname "Kikadidi Zoula" .
+tsd:otya_kikadidi-zoula tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:otya_kikadidi-zoula tsd:personalFriend tsd:Thomas_Geoffroy .
+tsd:otya_kikadidi-zoula tsd:socialFriend tsd:Loreena_Barrere .
+tsd:otya_kikadidi-zoula tsd:personalFriend tsd:Loreena_Barrere .
+tsd:otya_kikadidi-zoula tsd:socialFriend tsd:jules_cassan .
+tsd:otya_kikadidi-zoula tsd:personalFriend tsd:jules_cassan .
+tsd:otya_kikadidi-zoula tsd:personalFriend tsd:rafik_amara .
+
+# Charles
+tsd:charles_langlois rdf:type foaf:Person .
+tsd:charles_langlois foaf:mail "charles.langlois@etu.umontpellier.fr" .
+tsd:charles_langlois foaf:name "Charles" .
+tsd:charles_langlois foaf:familyname "Langlois" .
+tsd:charles_langlois tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:charles_langlois tsd:personalFriend tsd:Thomas_Geoffroy .
+
+#Chaymae
+tsd:chaymae_chouari rdf:type foaf:Person .
+tsd:chaymae_chouari foaf:mail "chaymae.chouari@etu.umontpellier.fr" .
+tsd:chaymae_chouari foaf:name "Chaymae" .
+tsd:chaymae_chouari foaf:familyname "Chouari" .
+
+#Lien Chaymae
+tsd:chaymae_chouari tsd:socialFriend tsd:laurencia_dovi-late .
+tsd:chaymae_chouari tsd:socialFriend tsd:Ibrahim_Simpara .
+tsd:chaymae_chouari tsd:socialFriend tsd:marta_boshkovska .
+tsd:chaymae_chouari tsd:socialFriend tsd:charles_langlois.
+tsd:chaymae_chouari tsd:socialFriend tsd:ayman_benazzouz.
+tsd:chaymae_chouari tsd:personalFriend tsd:ayman_benazzouz .
+tsd:chaymae_chouari tsd:personalFriend tsd:Ibrahim_Simpara .
+
+# Sébastien
+tsd:sebastien_vial rdf:type foaf:Person .
+tsd:sebastien_vial foaf:mail "sebastien.vial@etu.umontpellier.fr" .
+tsd:sebastien_vial foaf:name "Sébastien" .
+tsd:sebastien_vial foaf:familyname "VIAL" .
+tsd:sebastien_vial tsd:socialFriend tsd:elliot_mazerand.
+tsd:sebastien_vial tsd:personalFriend tsd:loris_gp.
+tsd:sebastien_vial tsd:personalFriend tsd:Bamboclaat.
+
+# Rayan
+tsd:rayan_malandain rdf:type foaf:Person .
+tsd:rayan_malandain foaf:mail "rayan.malandain@etu.umontpellier.fr" .
+tsd:rayan_malandain foaf:name "rayan" .
+tsd:rayan_malandain foaf:familyname "malandain" .
+
+# Liens Rayan
+tsd:rayan_malandain tsd:personalFriend tsd:amaury_rebillard .
+tsd:rayan_malandain tsd:socialFriend tsd:amaury_rebillard .
+tsd:rayan_malandain tsd:socialFriend tsd:Adam_ElHorri .
+tsd:rayan_malandain tsd:socialFriend tsd:thomas_razafimbahoaka .
+tsd:rayan_malandain tsd:personalFriend tsd:Adam_ElHorri .
+
+# Loris
+tsd:loris_gp rdf:type foaf:Person .
+tsd:loris_gp foaf:mail "loris.garcia-pena@etu.umontpellier.fr" .
+tsd:loris_gp foaf:name "Loris" .
+tsd:loris_gp foaf:familyname "GARCIA-PENA" .
+tsd:loris_gp tsd:personalFriend tsd:sebastien_vial .
+tsd:loris_gp tsd:socialFriend tsd:elliot_mazerand .
+
+# Elliot
+tsd:elliot_mazerand rdf:type foaf:Person .
+tsd:elliot_mazerand foaf:mail "elliot.mazerand@etu.umontpellier.fr" .
+tsd:elliot_mazerand foaf:name "Elliot" .
+tsd:elliot_mazerand foaf:familyname "Mazerand" .
+tsd:elliot_mazerand tsd:socialFriend tsd:sebastienCortexpyramide .
+tsd:elliot_mazerand tsd:personalFriend tsd:loris_gpExplorer2 .
+
+#Ibrahim
+tsd:Ibrahim_Simpara rdf:type foaf:Person .
+tsd:Ibrahim_Simpara foaf:mail "ibrahim.simpara@etu.umontpellier.fr" .
+tsd:Ibrahim_Simpara foaf:name "Ibrahim" .
+tsd:Ibrahim_Simpara foaf:familyname "simpara" .
+
+# liens Ibrahim
+tsd:Ibrahim_Simpara tsd:socialFriend tsd:rafik_amara .
+tsd:Ibrahim_Simpara tsd:personalFriend tsd:rafik_amara .
+tsd:Ibrahim_Simpara tsd:personalFriend tsd:Bomboclaat .
+tsd:Ibrahim_Simpara tsd:socialFriend tsd:marta_boshkovska .
+tsd:Ibrahim_Simpara tsd:socialFriend tsd:Tom .
+tsd:Ibrahim_Simpara tsd:socialFriend tsd:chaymae_chouari .
+
+# Enzo Viguier
+tsd:enzo_viguier rdf:type foaf:Person .
+tsd:enzo_viguier foaf:mail "enzo.viguier@etu.umontpellier.fr" .
+tsd:enzo_viguier foaf:name "enzo" .
+tsd:enzo_viguier foaf:familyname "viguier" .
+
+# Lien entre Enzo et les gens du monde vivant
+tsd:leo_monto tsd:socialFriend tsd:leo_monto .
+tsd:tristan_gaido tsd:socialFriend tsd:tristan_gaido .
+tsd:leo_monto tsd:personalFriend tsd:leo_monto .
+tsd:aurelien_milla tsd:personalFriend tsd:aurelien_milla .
+
+#Bomboclaat
+tsd:Bomboclaat rdf:type foaf:Person .
+tsd:Bomboclaat foaf:mail "bombo.claat@etu.umontpellier.fr" .
+tsd:Bomboclaat foaf:name "Bombo" .
+tsd:Bomboclaat foaf:familyname "Claat" .
+
+#Lien entre Bomboclaat et le peuple
+tsd:Bomboclaat tsd:socialFriend tsd:Wemby .
+tsd:Bomboclaat tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Bomboclaat tsd:socialFriend tsd:Tai_Nguyen .
+tsd:Bomboclaat tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Bomboclaat tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Bomboclaat tsd:socialFriend tsd:Ibrahim_Simpara .
+
+#Mon seigneur Laurent de médicis
+tsd:Lord_laurent rdf:type foaf:Marteau_piqueur .
+tsd:Lord_laurent foaf:mail "laurent.antoinette@etu.umontpellier.fr" .
+tsd:Lord_laurent foaf:name "Laurent" .
+tsd:Lord_laurent foaf:familyname "Lord" .
+
+# thomas le vrai gitan du fitness park
+tsd:thomas_razafimbahoaka rdf:type foaf:Person .
+tsd:thomas_razafimbahoaka foaf:mail "thomas.razafimbahoaka@etud.umontpellier.fr" .
+tsd:thomas_razafimbahoaka foaf:name "thomas" .
+tsd:thomas_razafimbahoaka foaf:familyname "razafimbahoaka" .
+
+# alice
+tsd:alice_dupont rdf:type foaf:Person .
+tsd:alice_dupont foaf:mail "alice.dupont@etud.umontpellier.fr" .
+tsd:alice_dupont foaf:name "Alice" .
+tsd:alice_dupont foaf:familyname "Dupont" .
+tsd:alice_dupont tsd:socialFriend tsd:Tai_Nguyen .
+tsd:alice_dupont tsd:personalFriend tsd:Tai_Nguyen .
+
+#Romain
+tsd:romain_gallerne rdf:type foaf:Person .
+tsd:romain_gallerne foaf:mail "romain.gallerne@etu.umontpellier.fr" .
+tsd:romain_gallerne foaf:name "Romain" .
+tsd:romain_gallerne foaf:familyname "Gallerne" .
+tsd:romain_gallerne tsd:personalFriend tsd:alice_dupont .
+
+#Amaury
+tsd:amaury_rebillard rdf:type foaf:Person .
+tsd:amaury_rebillard foaf:mail "amaury.rebillard@etu.umontpellier.fr" .
+tsd:amaury_rebillard foaf:name "Amaury" .
+tsd:amaury_rebillard foaf:familyname "Rebillard" .
+tsd:amaury_rebillard tsd:socialFriend tsd:rayan_malandain .
+tsd:amaury_rebillard tsd:personalFriend tsd:rayan_malandain .
+tsd:amaury_rebillard tsd:socialFriend tsd:thomas_razafimbahoaka .
+tsd:amaury_rebillard tsd:socialFriend tsd:Adam_ElHorri .
+tsd:amaury_rebillard tsd:socialFriend tsd:Tom .
+
+#lien thomas barbu
+tsd:thomas_razafimbahoaka tsd:socialFriend tsd:Adam_Elhorri .
+tsd:thomas_razafimbahoaka tsd:personalFriend tsd:Adam_Elhorri .
+tsd:thomas_razafimbahoaka tsd:socialFriend tsd:Tai_Nguyen .
+tsd:thomas_razafimbahoaka tsd:socialFriend tsd:amaury_rebillard .
+tsd:thomas_razafimbahoaka tsd:socialFriend tsd:rayan_malandain .
+tsd:thomas_razafimbahoaka tsd:personalFriend tsd:rayan_malandain .
+tsd:thomas_razafimbahoaka tsd:personalFriend tsd:Tom_Gimat .
+
+#lien adam
+tsd:Adam_ElHorri tsd:socialFriend tsd:thomas_razafimbahoaka .
+tsd:Adam_ElHorri tsd:personalFriend tsd:rayan_malandain .
+tsd:Adam_ElHorri tsd:personalFriend tsd:otya_kikadidi-zoula .
+tsd:Adam_ElHorri tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Adam_ElHorri tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Adam_ElHorri tsd:personalFriend tsd:Loreena_Barrere .
+tsd:Adam_ElHorri tsd:personalFriend tsd:Tai_Nguyen .
+tsd:Adam_ElHorri tsd:socialFriend tsd:amaury_rebillard .
+tsd:Adam_ElHorri tsd:socialFriend tsd:Ibrahim_simpara .
+tsd:Adam_ElHorri tsd:socialFriend tsd:marta_boshkovska .
+tsd:Adam_ElHorri tsd:personalFriend tsd:rafik_amara .
+
+#Wemby
+tsd:Wemby rdf:type foaf:Person .
+tsd:Wemby foaf:mail "wemby.spurs@etu.umontpellier.fr" .
+tsd:Wemby foaf:name "Spurs" .
+tsd:Wemby foaf:familyname "Wemby" .
+
+#Lien entre Wemby et le peuple
+tsd:Wemby tsd:socialFriend tsd:Bomboclaat .
+tsd:Wemby tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Wemby tsd:socialFriend tsd:Tai_Nguyen .
+tsd:Wemby tsd:socialFriend tsd:Thomas_Geoffroy .
+tsd:Wemby tsd:socialFriend tsd:Loreena_Barrere .
+tsd:Wemby tsd:socialFriend tsd:ibrahim_simpara .
+
+#Tom rdv tacos gare joytacos en attendant la 3
+tsd:Tom rdf:type foaf:Person .
+tsd:Tom foaf:mail "tom.gimat01@ladyxena.fr" .
+tsd:Tom foaf:name "Tom" .
+tsd:Tom foaf:familyname "Gimat" .
+
+#amis au kebab de tom (frites offertes)
+tsd:Tom tsd:socialFriend tsd:Bomboclaat .
+tsd:Tom tsd:socialFriend tsd:otya_kikadidi-zoula .
+tsd:Tom tsd:socialFriend tsd:thomas_razafimbahoaka .
+tsd:Tom tsd:socialFriend tsd:amaury_rebillard .
+tsd:Tom tsd:socialFriend tsd:Ibrahim_Simpara .
+tsd:Tom tsd:socialFriend tsd:jules_cassan .

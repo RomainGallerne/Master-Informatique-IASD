@@ -1,0 +1,12 @@
+@prefix tsd: <http://www.umontpellier.fr/traitementsemantiquedesdonnees#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+foaf:knows rdf:type owl:SymmetricProperty.
+tsd:socialFriend rdfs:subPropertyOf foaf:knows.
+tsd:personalFriend rdfs:subPropertyOf foaf:knows.
+
+
+

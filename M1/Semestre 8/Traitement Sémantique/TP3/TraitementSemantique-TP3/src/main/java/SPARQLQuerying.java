@@ -14,17 +14,15 @@ import org.apache.jena.riot.RDFDataMgr;
 
 public class SPARQLQuerying {
 
-	private static final String SPARQL_QUERY = 
-	        "PREFIX movies: <http://www.lirmm.fr/ulliana/movies#>\n" +
-	        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-	        "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-	        "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-	        "PREFIX dbp: <http://dbpedia.org/>\n" +
-	        
-	        "SELECT ?artistID WHERE {?artistID a ?Class . ?Class rdfs:subClassOf movies:Artist .}";
-	
-	
-		
+	private static final String SPARQL_QUERY =
+	        "PREFIX tsd: <http://www.umontpellier.fr/traitementsemantiquedesdonnees#>" +
+			"PREFIX foaf: <http://xmlns.com/foaf/0.1/>" +
+			"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
+			"PREFIX owl: <http://www.w3.org/2002/07/owl#>" +
+			"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+
+	        "SELECT ?p1 ?p2 ?p3 ?p4 WHERE{?p1 tsd:personalFriend ?p2. ?p1 tsd:personalFriend ?p3. ?p1 tsd:personalFriend ?p4. ?p2 tsd:personalFriend ?p3. ?p2 tsd:personalFriend ?p4. ?p3 tsd:socialFriend ?p4. FILTER(STR(?p1)<STR(?p2)) FILTER(STR(?p2)<STR(?p3)) FILTER(STR(?p3)<STR(?p4))}";
 	
 	private static void evaluateQuery(InfModel infmodel) {
 		Query query = QueryFactory.create(SPARQL_QUERY);
@@ -39,8 +37,8 @@ public class SPARQLQuerying {
 	
 	public static void main(String[] args) {
 		// Load the schema and data models
-		Model schema = RDFDataMgr.loadModel("src/main/resources/owlMovieSchema.ttl", Lang.TURTLE);
-		Model data = RDFDataMgr.loadModel("src/main/resources/owlMovieData.ttl", Lang.TURTLE);
+		Model schema = RDFDataMgr.loadModel("src/main/resources/owlUESchema.ttl", Lang.TURTLE);
+		Model data = RDFDataMgr.loadModel("src/main/resources/owlUEData.ttl", Lang.TURTLE);
 
 		// Get an OWL Reasoner
 		Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
