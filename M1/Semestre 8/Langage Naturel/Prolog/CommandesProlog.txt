@@ -1,0 +1,9 @@
+Lancer prolog : swipl
+Ouvrir fichier : consult("fichier.pl").
+Quitter : halt.
+Interrompre : CTRL C + a
+
+Pour suivre l'execution : trace.
+sortir du suivi : notrace    puis    nodebug.
+
+Afficher plusieurs élements : ;
