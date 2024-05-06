@@ -15,5 +15,9 @@
 
 <https://www.starwars.com/databank/PodRacer> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://www.starwars.com/databank/Vehicle> .
 <https://www.starwars.com/databank/uses> <http://www.w3.org/2000/01/rdf-schema#domain> <https://www.starwars.com/databank/Character> .
+
 <http://www.imdb.com/maleActorIn> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.imdb.com/actorIn> .
 <http://www.imdb.com/actressIn> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.imdb.com/actorIn> .
+
+<http://www.imdb.com/title> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.imdb.com/Movie> .
+<http://www.imdb.com/fullName> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.imdb.com/Person> .
