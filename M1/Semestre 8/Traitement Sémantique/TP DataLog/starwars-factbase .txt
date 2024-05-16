@@ -1,0 +1,161 @@
+% BASE DE FAITS
+% TABLE casting [tconst | nconst | category | "character"]
+
+casting(tt2488496,nm3915784,actor,finn).
+casting(tt0120915,nm0000184,director,null).
+casting(tt0080684,nm0000148,actor,han_solo).
+casting(tt2527338,nm0000434,actor,luke_skywalker).
+casting(tt2488496,nm5397459,actress,rey).
+casting(tt0121766,nm0000184,director,null).
+casting(tt0086190,nm0000402,actress,leia_organa).
+casting(tt0086190,nm0549658,director,null).
+casting(tt0121765,nm0000184,director,null).
+casting(tt0121765,nm0159789,actor,anakin_skywalker).
+casting(tt0120915,nm0000191,actor,obi_wan_kenobi).
+casting(tt2527338,nm3485845,actor,kylo_ren).
+casting(tt0120915,nm0000204,actress,queen_amidala).
+casting(tt0076759,nm0000027,actor,obi_wan_kenobi).
+casting(tt2527336,nm3915784,actor,finn).
+casting(tt2527336,nm0000402,actress,leia_organa).
+casting(tt0086190,nm0001850,actor,lando_calrissian).
+casting(tt0121766,nm0000191,actor,obi_wan_kenobi).
+casting(tt0086190,nm0002354,composer,null).
+casting(tt2527336,nm0426059,director,null).
+casting(tt0121766,nm0159789,actor,anakin_skywalker).
+casting(tt0080684,nm0000402,actress,leia_organa).
+casting(tt2488496,nm0009190,director,null).
+casting(tt0121765,nm0002354,composer,null).
+casting(tt2527336,nm0002354,composer,null).
+casting(tt0080684,nm0449984,director,null).
+casting(tt0120915,nm0002354,composer,null).
+casting(tt0086190,nm0000148,actor,han_solo).
+casting(tt0121765,nm0000191,actor,obi_wan_kenobi).
+casting(tt2527338,nm0009190,director,null).
+casting(tt0076759,nm0002354,composer,null).
+casting(tt0121766,nm0002354,composer,null).
+casting(tt0076759,nm0000402,actress,leia_organa).
+casting(tt0121765,nm0000204,actress,padme).
+casting(tt0086190,nm0000434,actor,luke_skywalker).
+casting(tt0120915,nm0005157,actor,anakin_skywalker).
+casting(tt2527336,nm0000434,actor,luke_skywalker).
+casting(tt2527338,nm5397459,actress,rey).
+casting(tt0120915,nm0000553,actor,qui_gon_jinn).
+casting(tt0080684,nm0001850,actor,lando_calrissian).
+casting(tt0121765,nm0000489,actor,count_dooku).
+casting(tt0076759,nm0000434,actor,luke_skywalker).
+casting(tt0120915,nm0000204,actress,padme).
+casting(tt0076759,nm0000184,director,null).
+casting(tt3748528,nm2284484,director,null).
+casting(tt0121766,nm0000204,actress,padme).
+casting(tt0076759,nm0000148,actor,han_solo).
+casting(tt2527336,nm5397459,actress,rey).
+casting(tt0080684,nm0000434,actor,luke_skywalker).
+casting(tt3748528,nm0428065,actress,jyn_erso).
+casting(tt0086190,nm0000469,actor,darth_vader).
+casting(tt0076759,nm0000469,actor,darth_vader).
+casting(tt0080684,nm0000469,actor,darth_vader).
+casting(tt3748528,nm1872855,actor,darth_vader).
+
+% TABLE person[nconst|primaryname|birthyear|deathyear]
+
+person(nm0000027,"Alec Guinness",1914,2000).
+person(nm0000148,"Harrison Ford",1942,null).
+person(nm0000184,"George Lucas",1944,null).
+person(nm0000191,"Ewan McGregor",1971,null).
+person(nm0000204,"Natalie Portman",1981,null).
+person(nm0000402,"Carrie Fisher",1956,2016).
+person(nm0000434,"Mark Hamill",1951,null).
+person(nm0000469,"James Earl Jones",1931,null).
+person(nm0000489,"Christopher Lee",1922,2015).
+person(nm0000553,"Liam Neeson",1952,null).
+person(nm0001850,"Billy Dee Williams",1937,null).
+person(nm0002354,"John Williams",1932,null).
+person(nm0005157,"Jake Lloyd",1989,null).
+person(nm0009190,"J.J. Abrams",1966,null).
+person(nm0159789,"Hayden Christensen",1981,null).
+person(nm0426059,"Rian Johnson",1973,null).
+person(nm0428065,"Felicity Jones",1983,null).
+person(nm0449984,"Irvin Kershner",1923,2010).
+person(nm0549658,"Richard Marquand",1937,1987).
+person(nm1872855,"Spencer Wilding",1972,null).
+person(nm2284484,"Gareth Edwards",1975,null).
+person(nm3485845,"Adam Driver",1983,null).
+person(nm3915784,"John Boyega",1992,null).
+person(nm5397459,"Daisy Ridley",1992,null).
+
+% TABLE title [tconst|primarytitle|startyear|runtimeminutes]
+
+title(tt0076759,"Star Wars: Episode IV _ A New Hope",1977,121).
+title(tt0080684,"Star Wars: Episode V _ The Empire Strikes Back",1980,124).
+title(tt0086190,"Star Wars: Episode VI _ Return of the Jedi",1983,131).
+title(tt0120915,"Star Wars: Episode I _ The Phantom Menace",1999,136).
+title(tt0121765,"Star Wars: Episode II _ Attack of the Clones",2002,142).
+title(tt0121766,"Star Wars: Episode III _ Revenge of the Sith",2005,140).
+title(tt2488496,"Star Wars: Episode ofVII _ The Force Awakens",2015,138).
+title(tt2527336,"Star Wars: Episode VIII _ The Last Jedi",2017,152).
+title(tt2527338,"Star Wars: Episode IX _ The Rise of Skywalker",2019,142).
+title(tt3748528,"Rogue One: A Star Wars Story",2016,133).
+
+% ETAPE 1
+entity(MovieID) :- movie(MovieID).
+entity(CharacterID) :- character(CharacterID).
+entity(PersonID) :- person(PersonID).
+
+person(PersonID) :- actor(PersonID).
+person(PersonID) :- director(PersonID).
+
+% ETAPE 2
+hasTitle(FilmID,FilmName) :- title(FilmID,FilmName,_,_).
+hasReleaseYear(FilmID,FilmYear) :- title(FilmID,_,FilmYear,_).
+hasName(PersonID,PersonName) :- person(PersonID,PersonName,_,_).
+actressIn(ActorID,FilmID) :- casting(FilmID,ActorID,actress,_).
+maleActorIn(ActorID,FilmID) :- casting(FilmID,ActorID,actor,_).
+isDirector(PersonID,FilmID) :- casting(FilmID,PersonID,director,_).
+playedBy(Role,PersonID,FilmID) :- casting(FilmID,PersonID,actor,Role).
+playedBy(Role,PersonID,FilmID) :- casting(FilmID,PersonID,actress,Role).
+
+% ETAPE 3
+movie(FilmID) :- hasTitle(FilmID,_).
+movie(FilmID) :- hasReleaseYear(FilmID,_).
+person(PersonID) :- hasName(PersonID,_).
+
+actor(PersonID) :- actorIn(PersonID,FilmID).
+movie(FilmID) :- actorIn(PersonID,FilmID).
+
+director(PersonID) :- isDirector(PersonID,FilmID).
+movie(FilmID) :- isDirector(PersonID,FilmID).
+
+movie(FilmID) :- playedBy(Role,PersonID,FilmID).
+actor(PersonID) :- playedBy(Role,PersonID,FilmID).
+character(Role) :- playedBy(Role,PersonID,FilmID).
+
+% ETAPE 4
+actorIn(PersonID,FilmID) :- maleActorIn(PersonID,FilmID).
+actorIn(PersonID,FilmID) :- actressIn(PersonID, FilmID).
+
+% ETAPE 5
+answerTitreFilm(Titre) :- hasTitle(_,Titre).
+answerPersonnagePlusieurs(Personnage) :- playedBy(Personnage,Person1,_), playedBy(Personnage,Person2,_),Person1!=Person2.
+
+%#show answerTitreFilm/1.
+%#show answerPersonnagePlusieurs/1.
+
+% ETAPE 6
+hasDirected(Person1,Person2,Film) :- isDirector(Person1,Film),actorIn(Person2,Film).
+together(Person1,Person2,Film) :- actorIn(Person1,Film),actorIn(Person2,Film),Person1!=Person2.
+
+answerGeorgesLucas(ActorName) :- hasName(Actor,ActorName),hasDirected(GeorgesID,Actor,_),person(GeorgesID,"George Lucas",_,_).
+answerFordFisher(FilmName) :- hasTitle(Film,FilmName),together(FordID,FisherID,Film),person(FordID,"Harrison Ford",_,_),person(FisherID,"Carrie Fisher",_,_).
+answer4Films(Actor1Name,Actor2Name) :- hasName(Acotr1,Actor1Name),hasName(Actor2,Actor2Name),together(Actor1,Actor2,X),together(Actor1,Actor2,Y),together(Actor1,Actor2,Z),together(Actor1,Actor2,T),X!=Y,Y!=Z,Z!=T,X!=Z,X!=T,Y!=T,Actor1<Actor2.
+%#show answerGeorgesLucas/1.
+%#show answerFordFisher/1.
+%#show answer4Films/2.
+
+% ETAPE 7
+sameMovie(Person1,Person2) :- casting(Film,Person1,_,_),casting(Film,Person2,_,_),Person1!=Person2.
+connectedWith(Person1Name,Person2Name) :- sameMovie(Person1,Person2),hasName(Person1,Person1Name),hasName(Person2,Person2Name).
+connectedWith(Person1Name,Person2Name) :- connectedWith(X,Person2),sameMovie(Person1,X),hasName(Person1,Person1Name),hasName(Person2,Person2Name).
+
+answerNotConnected(Name1,Name2) :- not connectedWith(Name1,Name2),not connectedWith(Name2,Name1),hasName(Person1,Name1),hasName(Person2,Name2),Person1!=Person2.
+#show answerNotConnected/2.
+
