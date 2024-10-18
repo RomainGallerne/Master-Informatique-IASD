@@ -1,0 +1,1 @@
+ export COUCH3="http://mougenot:CsQqmTcPJxQ9NsMuQTETYM2eda8CVtNTfXA@prodpeda-couchdb-1.infra.umontpellier.fr:5984"
