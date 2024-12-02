@@ -110,9 +110,7 @@ update PrVoir set valeur=12 where valeur = 10;
 insert into PrVoir values (14);
 rollback;
 select * from PrVoir;
---> 6 et 8 ne sont pas supprimés car l'update entraine une validation de la transaction.
---> Ainsi les deux premièrs lignes ont été exécutés.
---> Le rollback n'a annulé que la dernière ligne.
+--> Le rollback annule ici toutes les instructions puisque on ne modifie pas le schéma.
 
 
 -- deux sessions ouvertes par ex. user1/user1 et user2/user2 sur master (travaillez en binôme)
@@ -123,11 +121,11 @@ GRANT ALL PRIVILEGES ON emp TO user1;
 -- donner tous les droits a user1 sur la table emp
 
 --sur user2
-insert into emp values (101, "nom_101", "adr_101");
+insert into emp (num,nom,fonction) values (101, "nom_101", "drh");
 -- insérer un tuple dans la table emp (de user2) d'un nouvel employé de numéro 101
 
 -- sur user1
-select * from user2.emp;
+select * from emp;
 -- consulter la table user2.emp 
 -- constatation ?
 
@@ -136,7 +134,7 @@ select * from user2.emp;
 -- puis valider la transaction par
 commit;
 -- sur user1
-select * from user2.emp;
+select * from emp;
 -- consulter la table user2.emp 
 
 --> constatation ? 
@@ -147,7 +145,7 @@ update emp set salaire =1000 where num=101;
 
 -- sur user1
 -- essayer de mettre à jour le même tuple
-update user2.emp set salaire =2000 where num=101;
+update emp set salaire =2000 where num=101;
 --> constatation ? 
 
 -- user2 
@@ -168,7 +166,7 @@ GRANT ALL PRIVILEGES ON emp TO user1;
 set transaction isolation level serializable;
 
 --sur user2
-insert into emp values (102, "nom_102", "adr_102");
+insert into emp (num,nom,fonction) values (102, "nom_102", "drh");
 -- insérer un tuple de num 102 dans la table emp (de user2)
 
 -- sur user1

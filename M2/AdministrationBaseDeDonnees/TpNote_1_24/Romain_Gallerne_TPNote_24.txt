@@ -1,0 +1,265 @@
+Exercice 1 (13 points) : 
+Expliquer tous vos résultats (vues du dictionnaire et requêtes SQL exploitées)
+
+-- Pour la table (1 point par question)
+1. donner la taille d'un tuple de table et donner la cardinalité de la table (nombre de tuples)
+
+    ANALYZE TABLE ABC COMPUTE STATISTICS;
+    SELECT avg_row_len FROM USER_TABLES WHERE table_name = 'ABC';
+    -- La taille d'un tuple est de 50 octets.
+
+    select count(*) from ABC;
+    -- La cardinalité de la table est de 1000000.
+
+2. donner le nombre total de blocs alloués à la table ABC en indiquant le nombre de blocs ayant fait l'objet d'écriture et le nombre de blocs vides
+
+    select blocks,empty_blocks from user_tables where table_name ='ABC';
+    -- Il y a 7300 blocs alloués pour la table ABC. 
+    -- 124 de ces blocs sont vides.
+    -- Ainsi, 7176 blocs ont subis une écriture.
+
+3. donner le nombre d'extents (et leur taille en blocs) compris dans le segment de table associé à la table ABC 
+
+    select segment_name, extents from user_segments where segment_name='ABC';
+    -- Il y a 73 extents dans le segment de la table ABC.
+
+    select extent_id, blocks from user_extents where segment_name = 'ABC';
+    -- Les segments 0 à 15 contiennent 8 blocs.
+    -- Les segments 16 à 72 contiennent 128 blocs.
+
+4. donner la taille en octets de l'espace de stockage qui a été réservé pour la table ABC 
+
+    select value as taille from v$parameter where name='db_block_size';
+    -- Un bloc de données fait 8192 octets
+    -- Or, nous avons que la table a 7300 blos alloués.
+    -- Cela donne donc 8192*7300 octets.
+
+    select (value*blocks) as o, (value*blocks)/1024/1024 as Mo from v$parameter,user_tables 
+    where name='db_block_size' and table_name ='ABC';
+    -- La taille de l'espace de stockage réservé pour la table ABC est donc de
+    -- 59801600 octets,
+    -- soit 57,30125 Mo.
+
+5. donnez le nom d'une vue consultable pour connaître le nombre de blocs parcourus lors de l'exécution d'une requête (utilisant ou non l'index), ainsi qu'un exemple de requête associée à cette vue ?
+
+    -- Une vue pouvant être utilisé est v$sql.
+    select * from ABC FETCH FIRST 10 ROWS ONLY;
+    select disk_reads from v$sql where sql_text='select * from ABC FETCH FIRST 10 ROWS ONLY';
+    -- On voit que la requête ci-dessus a mobilisé 13 blocs de données.
+
+--Pour l'index (1 point par question)
+1. comment savoir si l'index ABC_PK est unique et dense ?
+
+    select uniqueness, index_type, num_rows from user_indexes where index_name='ABC_PK';
+    -- On remarque que l'index est unique.
+    -- Le nombre de tuples est de 1000000, ce qui signifie que tous les tuples de la table sont stockés dans l'index.
+    -- il s'agit donc d'un index dense.
+
+2. donner la taille en octets d'un tuple de branche d'index et la taille d'un tuple de feuille d'index (en expliquant la différence de taille)
+
+    -- Pour obtenir ce résultat, on va diviser la somme de la taille totale de tous 
+    -- les tuples feuilles (reps. branches) par le nombre de tuples feuilles (resp. branches).
+    -- Cela donnera la taille moyenne en octet de chaque type de bloc.
+
+    select lf_rows_len / lf_rows as taille_feuille, br_rows_len / br_rows as taille_branch from index_stats;
+    -- Chaque tuple d'index feuille fait en moyenne 14.979802 octets.
+    -- Chaque tuple d'index branche fait en moyenne 10.9894586 octets.
+    -- Cette différence s'explique par le fait que l'arbre ne soit pas remplis.
+    -- De nombreuses branches de l'arbre ne contiennent par leur nombre maximum d'éléments, leur taille
+    -- est donc réduite.
+    -- A l'inverse, les feuilles, par l'algorithmes d'insertion des éléments, sont généralements plus remplis que
+    -- les branches supérieurs de l'arbre.
+
+3. donner le nombre de blocs branche d'index et le nombre de blocs feuille d'index
+
+    ANALYZE INDEX ABC_PK VALIDATE STRUCTURE;
+    select name, lf_blks, br_blks from index_stats;
+    -- Il y a 2088 blocs feuilles et 4 blocs branches.
+
+4. donner le nombre total de blocs alloués à l'index ABC_PK, ainsi que la hauteur de l'index
+
+    select name, (lf_blks+br_blks) from index_stats;
+    -- Il y a 2092 blocos au total dans l'index.
+
+    select blevel as h from user_indexes where index_name='ABC_PK';
+    -- La hauteur de l'index est de 2.
+
+
+5. donner la taille en octets de l'espace de stockage qui a été réservé à l'index ABC_PK 
+
+    select (value*(lf_blks+br_blks)) as o, (value*(lf_blks+br_blks))/1024/1024 as Mo from v$parameter,index_stats 
+    where v$parameter.name='db_block_size';
+    -- La taille de l'espace de stockage réservé pour l'index' ABC_PK est donc de
+    -- 17137664 octets,
+    -- soit 16,34375 Mo.
+
+6. donnez la vue et un exemple d'utilisation de la vue qui pourrait être consultée pour savoir si tous les blocs de l'index ABC_PK sont présents dans le cache de données
+
+    select A from ABC FETCH FIRST 100 ROWS ONLY;
+    select object_name, count(block#) from v$bh, dba_objects where objd = object_id and owner='E20200007056' and object_name='ABC_PK' group by object_name;
+    -- Avec la requête ci-dessus exécutés juste avant, le nombre de blocs est de 2093.
+    -- On a donc bien en cache tous les blocs de l'index.
+    -- Avec une requête plus modéré tel que celle-ci :
+    select A from ABC FETCH FIRST 10 ROWS ONLY;
+    -- On obtient un seul bloc chargé en cache.
+
+Commenter les résultats obtenus par rapport à ce que vous en saviez après calculs (exercice TD). Est ce cohérent (2 points)  ?
+
+    -- La taille en blocs calculé en TD est de 6803 blocs or nous avons obtenus 7300 blocs.
+    -- L'espace de stockage calculé en TD est de 53.15 Mo, or nous avons obtenus 57.30 Mo.
+    -- Le nombre de blocs d'index calculé en TD est de 2037 blocs, or nous avons obtenus 2092 blocs.
+    -- Hauteur d'index calculé en TD est de 3, nous avons obtenus 2 avec racine omise, donc 3.
+    -- Taille de l'index calculé en TD est de 15.95 Mo, or nous avons obtenu 16,34 Mo.
+
+    -- Nous remarquons que nos résultats sont cohérents et relativement similaires par rapport aux résultats
+    -- théoriques calculés en TD. Les résultats pratiques sont cependant un peu plus grands avec quelques blocs
+    -- supplémentaires et donc, un espace de stockage légèrement plus grand.
+    -- Cette légère différence, qui reste néanmoins cohérente puisque les résultats sont très proches,
+    -- peut s'expliquer par des structures de données internes à Oracle qui n'ont pas été prises en compte dans
+    -- les calculs théoriques.
+
+Exercice 2 (3 points) : 
+Pensez vous que l'index est utilisé pour les deux ordres de consultation suivants ? Justifiez votre réponse et donnez le nombre de blocs à parcourir (de données et possiblement d'index dans les deux cas) pour satisfaire la requête.
+
+1. select A from ABC where A = 10001 ;
+
+    -- L'index est bien utilisé pour cette ordre puisque celui-ci fait appel à l'attribut A de la table.
+    -- Cet attribut est la clé primaire. La création d'une clé primaire entraîne nécessairement la
+    -- création d'un index. C'est donc sur cette attribut que l'index de la table a été posé, cet index
+    -- se nomme d'ailleurs 'ABC_PK' pour PrimaryKey.
+    -- L'index est donc bien utilisé puisque l'attribut requêté est l'attribut indexé.
+
+2. select A, B from ABC where C like '%ABC%';
+
+    -- Ici, l'index ne peut pas être utilisé car le tri s'effectue sur l'attribut C de la table ABC.
+    -- Cet attribut ne possède pas d'index attritré et donc pas de structure de recherche facilité pour trouver
+    -- les éléments. Il faudra donc procéder à une recherche exhaustive sur cet attribut ou bien poser un
+    -- nouvel index si cet attribut est important et est souvent utilisé comme critère de tri.
+
+Exercice 3  (4 points): 
+Construisez une procédure PL/SQL qui vous semble à même de renvoyer les informations les plus importantes concernant l'organisation logique et physique d'une table et de ses index. Un plus sera de traiter les exceptions possibles et de construire un paquetage. Un exemple d'exécution et d'affichage des résultats est également attendu.
+
+    -- Voici les principales informations à consulter
+        -- Tuples / blocs (table)
+        -- segment (table)
+        -- Nombre d'extents (table)
+        -- Nombre de blocs vides (table)
+
+        -- Taille d'un tuple (table & index)
+        -- Nombre de blocs (table & index)
+        -- Espace mémoire total utilisé (table & index)
+        
+        -- Hauteur (index)
+
+    -- Ci-dessous, la procédure PL/SQL et son package retournant ces informations
+
+    
+        CREATE or REPLACE package infos AS
+            procedure INFOS_TABLE(TABLENAME IN VARCHAR);
+        end infos;
+        /
+
+        CREATE or REPLACE package body infos AS
+            PROCEDURE INFOS_TABLE(TABLENAME IN VARCHAR) 
+            IS
+                cursor indexes_names is 
+                    select index_name from USER_INDEXES 
+                    where table_name = TABLENAME;
+
+                taille_tuple number;
+                blocs_table number;
+                blocs_vide_table number;
+                nom_segment_table varchar(20);
+                nombre_extent_table number;
+                taille_octet_table number;
+
+                blocs_index number;
+                bloc_vide_index number;
+                taille_octet_index number;
+
+                taille_feuille_index number;
+                taille_branche_index number;
+                nombre_blocs_feuille number;
+                nombre_blocs_branche number;
+                hauteur number;
+            BEGIN
+                -- Partie table
+                select 
+                    avg_row_len,
+                    blocks,
+                    empty_blocks 
+                into taille_tuple, blocs_table, blocs_vide_table
+                from user_tables where table_name = TABLENAME;
+
+                select 
+                    (value*blocks) into taille_octet_table
+                from v$parameter,user_tables 
+                where name='db_block_size' and table_name =TABLENAME;
+
+                select 
+                    segment_name,
+                    extents 
+                into nom_segment_table,nombre_extent_table
+                from user_segments where segment_name=TABLENAME;
+
+                DBMS_OUTPUT.PUT_LINE('Taille d un tuple de la table : ' || TO_CHAR(taille_tuple));
+                DBMS_OUTPUT.PUT_LINE('Blocs dans la table : ' || TO_CHAR(blocs_table));
+                DBMS_OUTPUT.PUT_LINE('Blocs vides dans la table : ' || TO_CHAR(blocs_vide_table));
+                DBMS_OUTPUT.PUT_LINE('Segment de la table : ' || TO_CHAR(nom_segment_table));
+                DBMS_OUTPUT.PUT_LINE('Extent contennant la table : ' || TO_CHAR(nombre_extent_table));
+                DBMS_OUTPUT.PUT_LINE('Taille totale de la table : ' || TO_CHAR(taille_octet_table) || 'octets');
+
+                -- Partie index
+
+                for ind in indexes_names
+                LOOP
+
+                    DBMS_OUTPUT.PUT_LINE('Index : ' || ind.index_name);
+
+                    select 
+                        lf_blks+br_blks,
+                        lf_blks, 
+                        br_blks,
+                        lf_rows_len / lf_rows, 
+                        br_rows_len / br_rows 
+                    into blocs_index,nombre_blocs_feuille, nombre_blocs_branche, taille_feuille_index, taille_branche_index 
+                    from index_stats;
+
+                    select (value*(lf_blks+br_blks)) into taille_octet_index from v$parameter,index_stats where v$parameter.name='db_block_size';
+
+                    select blevel into hauteur from user_indexes where index_name=ind.index_name;
+
+                    DBMS_OUTPUT.PUT_LINE('Blocs dans l index : ' || TO_CHAR(blocs_index));
+                    DBMS_OUTPUT.PUT_LINE('Taille de l index : ' || TO_CHAR(taille_octet_index) || 'octets');
+                    DBMS_OUTPUT.PUT_LINE('Taille feuilles/branches : ' || TO_CHAR(taille_feuille_index) || '/' || TO_CHAR(taille_branche_index));
+                    DBMS_OUTPUT.PUT_LINE('Blocs feuilles/branches : ' || TO_CHAR(nombre_blocs_feuille) || '/' || TO_CHAR(nombre_blocs_branche));
+                    DBMS_OUTPUT.PUT_LINE('Taille totale de l index : ' || TO_CHAR(taille_octet_index));
+
+                END LOOP;
+            END;
+
+        END infos;
+        /
+
+-- Soit l'appel à la procédure
+    ANALYZE TABLE ABC COMPUTE STATISTICS;
+    EXECUTE infos.INFOS_TABLE('ABC');
+
+
+-- Voici un exemple de résultat retourné pour la table ABC :
+    Taille d un tuple de la table : 50
+    Blocs dans la table : 7300
+    Blocs vides dans la table : 124
+    Segment de la table : ABC
+    Extent contennant la table : 73
+    Taille totale de la table : 59801600 octets
+    Index : ABC_PK
+    Blocs dans l index : 2092
+    Taille de l index : 17137664 octets
+    Taille feuilles/branches : 14,979802/10,989458
+    Blocs feuilles/branches : 2088/4
+    Taille totale de l index : 17137664
+
+    
+        
+        
